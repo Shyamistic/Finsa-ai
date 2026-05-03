@@ -1,0 +1,71 @@
+{
+  "title": "LoanWizard OS — Operations Dashboard",
+  "uid": "loanwizard-os",
+  "version": 1,
+  "schemaVersion": 38,
+  "refresh": "10s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Active Sessions",
+      "type": "stat",
+      "gridPos": { "x": 0, "y": 0, "w": 4, "h": 4 },
+      "targets": [{ "expr": "active_sessions_total", "legendFormat": "Active" }],
+      "options": { "colorMode": "background", "graphMode": "area" }
+    },
+    {
+      "id": 2,
+      "title": "Offers Generated (Total)",
+      "type": "stat",
+      "gridPos": { "x": 4, "y": 0, "w": 4, "h": 4 },
+      "targets": [{ "expr": "offer_generated_total", "legendFormat": "Offers" }],
+      "options": { "colorMode": "background" }
+    },
+    {
+      "id": 3,
+      "title": "Sessions Rejected",
+      "type": "stat",
+      "gridPos": { "x": 8, "y": 0, "w": 4, "h": 4 },
+      "targets": [{ "expr": "sum(session_rejected_total)", "legendFormat": "Rejected" }],
+      "options": { "colorMode": "background", "thresholds": { "steps": [{ "color": "green", "value": 0 }, { "color": "red", "value": 1 }] } }
+    },
+    {
+      "id": 4,
+      "title": "Solana Anchors",
+      "type": "stat",
+      "gridPos": { "x": 12, "y": 0, "w": 4, "h": 4 },
+      "targets": [{ "expr": "solana_anchor_success_total", "legendFormat": "Anchored" }],
+      "options": { "colorMode": "background" }
+    },
+    {
+      "id": 5,
+      "title": "Agent Processing Time (p95)",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 4, "w": 12, "h": 8 },
+      "targets": [
+        { "expr": "histogram_quantile(0.95, rate(agent_processing_time_ms_bucket[5m]))", "legendFormat": "{{agent_id}} p95" }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Fraud Score Distribution",
+      "type": "histogram",
+      "gridPos": { "x": 12, "y": 4, "w": 12, "h": 8 },
+      "targets": [{ "expr": "rate(fraud_score_histogram_bucket[5m])", "legendFormat": "{{le}}" }]
+    },
+    {
+      "id": 7,
+      "title": "Bandwidth Tier Distribution",
+      "type": "piechart",
+      "gridPos": { "x": 0, "y": 12, "w": 8, "h": 8 },
+      "targets": [{ "expr": "bandwidth_tier_total", "legendFormat": "{{tier}}" }]
+    },
+    {
+      "id": 8,
+      "title": "Session Rejection Reasons",
+      "type": "piechart",
+      "gridPos": { "x": 8, "y": 12, "w": 8, "h": 8 },
+      "targets": [{ "expr": "session_rejected_total", "legendFormat": "{{reason}}" }]
+    }
+  ]
+}

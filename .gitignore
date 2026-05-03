@@ -1,0 +1,64 @@
+# ── Dependencies ──────────────────────────────────────────────────────────────
+node_modules/
+.pnpm-store/
+.yarn/
+
+# ── Build outputs ─────────────────────────────────────────────────────────────
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# ── ALL .env files — NEVER commit secrets ─────────────────────────────────────
+.env
+.env.local
+.env.*.local
+packages/backend/.env
+packages/frontend/.env
+# Catch any nested .env files
+**/.env
+**/.env.local
+**/.env.*.local
+
+# ── Private keys & certificates ───────────────────────────────────────────────
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+
+# ── Database & persistent storage ────────────────────────────────────────────
+pgdata/
+grafana_data/
+docker-volumes/
+*.sqlite
+*.db
+
+# ── Generated / scratch files ─────────────────────────────────────────────────
+*.pdf
+demo-content.txt
+gen.js
+gen2.js
+write-demo.js
+*.log
+logs/
+
+# ── Test coverage ─────────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+
+# ── OS & Editor ───────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
