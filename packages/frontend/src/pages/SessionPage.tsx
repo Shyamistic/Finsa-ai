@@ -13,6 +13,7 @@ import {
   Upload, FileText, CheckCircle, X, Camera, Zap
 } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || '';
 const SESSION_DURATION = 300; // 5 minutes
 
 // Web Speech API
@@ -67,7 +68,7 @@ export default function SessionPage() {
     if (connected && !sessionStartedRef.current && sessionId) {
       sessionStartedRef.current = true;
       setSessionStarted(true);
-      axios.post(`/sessions/${sessionId}/start`, {}, {
+      axios.post(`${API_URL}/sessions/${sessionId}/start`, {}, {
         headers: { Authorization: `Bearer ${apiKey}` }
       }).catch(console.error);
     }
@@ -113,7 +114,7 @@ export default function SessionPage() {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 8000); // 8s timeout
 
-      const response = await fetch('/tts/synthesize', {
+      const response = await fetch(`${API_URL}/tts/synthesize`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text, language: lang }),
@@ -268,7 +269,7 @@ export default function SessionPage() {
       const formData = new FormData();
       formData.append('document', file);
       formData.append('doc_type', docType);
-      await axios.post(`/sessions/${sessionId}/documents/verify`, formData, {
+      await axios.post(`${API_URL}/sessions/${sessionId}/documents/verify`, formData, {
         headers: {
           Authorization: `Bearer ${apiKey}`,
           'Content-Type': 'multipart/form-data',

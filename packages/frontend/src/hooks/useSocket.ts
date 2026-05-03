@@ -17,7 +17,7 @@ export interface AgentState {
 
 export type AgentStates = Record<string, AgentState>;
 
-const WS_URL = 'http://localhost:4000';
+const WS_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
 export function useSocket(sessionId: string | null) {
   const socketRef = useRef<Socket | null>(null);

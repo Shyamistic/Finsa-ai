@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 export type BandwidthTier = '720p' | '480p' | '360p' | 'audio-only';
 
-const API_URL = '';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 export function useBandwidthProbe(): { tier: BandwidthTier; probing: boolean; kbps: number } {
   const [tier, setTier] = useState<BandwidthTier>('480p');
