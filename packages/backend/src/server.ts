@@ -18,6 +18,7 @@ import { visionRouter } from './routes/vision';
 import { Orchestrator } from './orchestrator/Orchestrator';
 
 const app = express();
+app.set('trust proxy', 1); // Fixes express-rate-limit behind Render proxy
 const httpServer = createServer(app);
 
 export const io = new SocketIOServer(httpServer, {
