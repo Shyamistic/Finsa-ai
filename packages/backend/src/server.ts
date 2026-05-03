@@ -22,14 +22,8 @@ const httpServer = createServer(app);
 
 export const io = new SocketIOServer(httpServer, {
   cors: {
-    origin: (origin, callback) => {
-      // Allow any localhost port in dev, or the configured FRONTEND_URL
-      if (!origin || /^http:\/\/localhost(:\d+)?$/.test(origin) || origin === process.env.FRONTEND_URL) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },    methods: ['GET', 'POST'],
+    origin: true,
+    methods: ['GET', 'POST'],
     credentials: true,
   }
 });
@@ -38,13 +32,7 @@ const orchestrator = new Orchestrator(io, process.env.REDIS_URL || 'redis://loca
 setOrchestrator(orchestrator);
 
 const corsOptions: cors.CorsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || /^http:\/\/localhost(:\d+)?$/.test(origin) || origin === process.env.FRONTEND_URL) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: true,
   credentials: true,
 };
 
