@@ -13,7 +13,7 @@ import EmiCalculatorWidget from '../components/EmiCalculatorWidget';
 import VcipCompliancePanel from '../components/VcipCompliancePanel';
 
 // YouTube demo video ID — replace with your actual video ID after uploading
-const YOUTUBE_VIDEO_ID = 'dQw4w9WgXcQ'; // placeholder — update after YouTube upload
+const YOUTUBE_VIDEO_ID = '6bLA20_10tw'; // placeholder — update after YouTube upload
 
 const DEMO_PROFILES = [
   {
