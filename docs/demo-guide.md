@@ -1,5 +1,5 @@
 # Finsa AI — Demo Guide
-## TenzorX 2026 | Finsa AI
+## SBI Hackathon @ GFF 2026 | Finsa AI
 
 ---
 
@@ -160,4 +160,4 @@ session within 10 minutes using a resume token.
 
 ---
 
-*Problem Statement 3 | TenzorX 2026 National AI Hackathon | Finsa AI*
+*Problem Statement 3 | SBI Hackathon @ GFF 2026 | Finsa AI*

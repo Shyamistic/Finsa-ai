@@ -260,7 +260,7 @@
 > "The numbers speak for themselves: 3x faster onboarding. 80% reduction in manual KYC.
 > 40% improvement in lead conversion. 60% increase in digital adoption."
 >
-> "We're Tenzor. We built Finsa AI for SBI's digital future."
+> "We're Kuber Labs, from IIT Patna. We built Finsa AI for SBI's digital future."
 >
 > "Thank you. We'd love to schedule a technical deep-dive with your engineering team."
 
@@ -311,4 +311,4 @@ If the live demo is unavailable during recording:
 
 ---
 
-*Finsa AI | SBI Hackathon @ GFF 2026 | Tenzor*
+*Finsa AI | SBI Hackathon @ GFF 2026 | Kuber Labs | IIT Patna*

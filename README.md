@@ -1,6 +1,6 @@
-# Finsa AI - SBI Hackathon Agentic Banking Platform
+# Finsa AI — Agentic AI Banking Platform
 
-> **Built for SBI Hackathon @ GFF 2026 · Finsa AI (Udyam/MSME startup)**
+> **Built for SBI Hackathon @ GFF 2026 · Kuber Labs | IIT Patna**
 
 Finsa AI is a multi-agent banking journey platform built for SBI hackathon evaluation. It demonstrates real-time customer acquisition, digital adoption, and digital engagement flows with a guided conversational interface, compliance-first architecture, and production-ready orchestration patterns.
 
@@ -17,10 +17,10 @@ Finsa AI is a multi-agent banking journey platform built for SBI hackathon evalu
 
 | URL | What |
 |-----|------|
-| `https://finsa.finsa.ai/demo` | Judges demo mode (recommended for evaluation) |
-| `https://finsa.finsa.ai/apply` | Start real-time session flow |
-| `https://finsa.finsa.ai/` | Landing page |
-| `https://finsa.finsa.ai/admin` | Admin dashboard (key required) |
+| `https://finsa-ai.onrender.com/demo` | Judges demo mode (recommended for evaluation) |
+| `https://finsa-ai.onrender.com/apply` | Start real-time session flow |
+| `https://finsa-ai.onrender.com` | Landing page |
+| `https://finsa-ai.onrender.com/admin` | Admin dashboard (key required) |
 
 ---
 
@@ -541,7 +541,15 @@ If judges see backend failures in production, verify these first:
 
 ## Team
 
-Built by **Finsa AI** for SBI Hackathon @ GFF 2026 with a production-first startup roadmap.
+Built by **Kuber Labs | IIT Patna** for SBI Hackathon @ Global Fintech Fest 2026.
+
+| | |
+|---|---|
+| **Project** | Finsa AI — Agentic AI Banking Platform |
+| **Team** | Kuber Labs | IIT Patna |
+| **Event** | SBI Hackathon @ Global Fintech Fest 2026 |
+| **Live Demo** | https://finsa-ai.onrender.com |
+| **GitHub** | https://github.com/Shyamistic/Finsa-ai |
 
 ---
 
@@ -551,4 +559,4 @@ MIT — see [LICENSE](LICENSE)
 
 ---
 
-*Finsa AI · Powered by AWS Bedrock · RBI V-CIP Compliant · DPDP Act 2023*
+*Finsa AI · Kuber Labs | IIT Patna · Powered by AWS Bedrock · RBI V-CIP Compliant · DPDP Act 2023*
