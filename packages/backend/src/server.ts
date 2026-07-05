@@ -117,9 +117,21 @@ io.on('connection', (socket) => {
   });
 });
 
+// Run database migrations before starting the server
+import { runMigrations } from './db/migrate';
+
 const PORT = parseInt(process.env.PORT || '4000', 10);
-httpServer.listen(PORT, () => {
-  logger.info({ event: 'server_started', port: PORT });
-});
+
+(async () => {
+  try {
+    await runMigrations();
+  } catch (err: any) {
+    logger.error({ event: 'startup_migration_failed', err: err.message });
+    // Continue starting — the app will handle individual query failures
+  }
+  httpServer.listen(PORT, () => {
+    logger.info({ event: 'server_started', port: PORT });
+  });
+})();
 
 export { app, httpServer };

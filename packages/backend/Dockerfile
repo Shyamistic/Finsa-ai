@@ -15,6 +15,8 @@ COPY package*.json ./
 RUN npm ci --only=production
 # Copy only the compiled code from the builder stage
 COPY --from=builder /app/dist ./dist
-# If you have static assets in src, copy them too, or adjust paths
+# Copy SQL schema and migration files (not compiled by TypeScript)
+COPY --from=builder /app/src/db/schema.sql ./src/db/schema.sql
+COPY --from=builder /app/src/db/migrations ./src/db/migrations
 EXPOSE 4000
 CMD ["node", "dist/server.js"]
