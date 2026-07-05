@@ -7,7 +7,7 @@
  * and validation status.
  *
  * This is the "Auto-Fill & Alternate Data Generation" node from the
- * Poonawalla Fincorp architecture diagram — made visible to judges.
+ * Finsa AI architecture diagram — made visible to judges.
  */
 import { useEffect, useState } from 'react';
 import { CheckCircle, AlertTriangle, Clock, Mic, Database, Cpu, Camera, Zap } from 'lucide-react';

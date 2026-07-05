@@ -5,6 +5,8 @@ import { Language } from '../lib/i18n';
 import { Shield, FileText, Clock, UserX, CheckCircle, Zap, Lock, Globe } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+const CURRENT_DEMO_KEY = 'demo-key-finsa-2026';
+const LEGACY_DEMO_KEY = 'demo-key-loanwizard-2026';
 
 interface ConsentPageProps {
   language?: Language;
@@ -22,28 +24,44 @@ export default function ConsentPage({ language = 'en', apiKey, whiteLabelConfig 
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const institutionName = whiteLabelConfig?.institutionName || 'Poonawalla Fincorp';
+  const institutionName = whiteLabelConfig?.institutionName || 'Finsa AI x SBI Pilot';
 
   const handleStart = async () => {
     if (!agreed) return;
     setLoading(true);
     setError(null);
     try {
-      const { data } = await axios.post(
+      const primaryKey = apiKey || CURRENT_DEMO_KEY;
+      const fallbackKey = LEGACY_DEMO_KEY;
+
+      const createSession = async (token: string) => axios.post(
         `${API_URL}/sessions`,
         { language, white_label_config: whiteLabelConfig },
         {
-          headers: { Authorization: `Bearer ${apiKey || 'demo-key-loanwizard-2026'}` },
+          headers: { Authorization: `Bearer ${token}` },
           timeout: 8000,
         }
       );
+
+      let data: { session_id: string };
+      try {
+        const response = await createSession(primaryKey);
+        data = response.data as { session_id: string };
+      } catch (e) {
+        if (apiKey || !axios.isAxiosError(e) || (e.response && e.response.status !== 403)) {
+          throw e;
+        }
+        const fallbackResponse = await createSession(fallbackKey);
+        data = fallbackResponse.data as { session_id: string };
+      }
+
       const sessionId = data.session_id as string;
       axios.post(`${API_URL}/sessions/${sessionId}/consent`, {
         consent_version: '1.0',
         data_categories: ['video', 'audio', 'pan', 'facial_biometrics', 'financial', 'geo_ip'],
         purpose: 'Loan eligibility assessment and offer generation',
         retention_days: 2555,
-      }, { headers: { Authorization: `Bearer ${apiKey || 'demo-key-loanwizard-2026'}` } }).catch(() => {});
+      }, { headers: { Authorization: `Bearer ${apiKey || CURRENT_DEMO_KEY}` } }).catch(() => {});
       navigate(`/session/${sessionId}`, { state: { language, apiKey } });
     } catch (err) {
       const isNetworkError = !axios.isAxiosError(err) || !err.response;
@@ -84,15 +102,15 @@ export default function ConsentPage({ language = 'en', apiKey, whiteLabelConfig 
               </div>
             )}
             <h1 className="text-2xl font-bold text-white">{institutionName}</h1>
-            <p className="text-sm text-white/50 mt-1">Video-Based Digital Loan Origination</p>
+            <p className="text-sm text-white/50 mt-1">SBI Hackathon Agentic Banking Journey</p>
           </div>
 
           {/* Feature pills */}
           <div className="flex flex-wrap gap-2 justify-center mb-8">
             {[
-              { icon: Zap, label: '3-min process' },
+                { icon: Zap, label: '3-min guided flow' },
               { icon: Lock, label: 'RBI V-CIP compliant' },
-              { icon: Globe, label: 'Hindi & English' },
+                { icon: Globe, label: 'Multilingual support' },
             ].map(({ icon: Icon, label }) => (
               <div key={label} className="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1">
                 <Icon className="w-3 h-3 text-blue-400" />
@@ -127,7 +145,7 @@ export default function ConsentPage({ language = 'en', apiKey, whiteLabelConfig 
               {[
                 { icon: FileText, text: 'Purpose: Loan eligibility assessment and offer generation' },
                 { icon: Clock, text: 'Retention: 7 years as per RBI guidelines' },
-                { icon: UserX, text: 'You may withdraw consent at any time by contacting us at privacy@poonawallafincorp.com' },
+                { icon: UserX, text: 'You may withdraw consent at any time by contacting us at privacy@finsa.ai' },
               ].map(({ icon: Icon, text }, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <Icon className="w-3.5 h-3.5 text-white/30 flex-shrink-0 mt-0.5" />

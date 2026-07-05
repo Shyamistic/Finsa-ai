@@ -1,4 +1,4 @@
-// Loan Comparison Engine — Poonawalla Fincorp LoanWizard OS
+// Loan Comparison Engine — Finsa AI Finsa AI
 
 export interface LoanOffer {
   amount: number;
@@ -19,7 +19,7 @@ export interface CompetitorComparison {
   processing_fee_pct: number;
   approval_time: string;
   savings_vs_this: number;
-  is_loanwizard: boolean;
+  is_finsa: boolean;
   highlight?: string;
 }
 
@@ -61,15 +61,15 @@ const COMPETITORS = [
 /**
  * Estimate the rate a competitor would offer for a given credit profile.
  * We use the midpoint of their range, biased toward the higher end for
- * non-prime profiles (to show LoanWizard's advantage).
+ * non-prime profiles (to show Finsa AI's advantage).
  */
 function estimateCompetitorRate(
   competitor: (typeof COMPETITORS)[0],
-  loanwizardRate: number
+  finsaRate: number
 ): number {
-  // Competitor rate is always higher than LoanWizard's for the same profile
+  // Competitor rate is always higher than Finsa AI's for the same profile
   const premium = competitor.lender === 'Bajaj Finance' ? 2.5 : 1.5;
-  const estimated = loanwizardRate + premium;
+  const estimated = finsaRate + premium;
   return Math.min(
     competitor.rate_max,
     Math.max(competitor.rate_min, Math.round(estimated * 10) / 10)
@@ -79,23 +79,23 @@ function estimateCompetitorRate(
 export function compareWithCompetitors(offer: LoanOffer): CompetitorComparison[] {
   const { amount, rate_pa, tenure_months } = offer;
 
-  const loanwizardEmi = calcEMI(amount, rate_pa, tenure_months);
-  const loanwizardTotalCost = loanwizardEmi * tenure_months;
-  const loanwizardProcessingFee = Math.round(amount * 0.01); // 1% processing fee
+  const finsaEmi = calcEMI(amount, rate_pa, tenure_months);
+  const finsaTotalCost = finsaEmi * tenure_months;
+  const finsaProcessingFee = Math.round(amount * 0.01); // 1% processing fee
 
-  const loanwizardEntry: CompetitorComparison = {
-    lender: 'Poonawalla Fincorp',
-    logo_initial: 'PF',
+  const finsaEntry: CompetitorComparison = {
+    lender: 'Finsa AI',
+    logo_initial: 'FA',
     rate_min: 9.99,
     rate_max: 24.0,
     effective_rate: rate_pa,
-    emi: loanwizardEmi,
-    total_cost: loanwizardTotalCost,
-    processing_fee: loanwizardProcessingFee,
+    emi: finsaEmi,
+    total_cost: finsaTotalCost,
+    processing_fee: finsaProcessingFee,
     processing_fee_pct: 1.0,
     approval_time: '< 3 minutes',
     savings_vs_this: 0,
-    is_loanwizard: true,
+    is_finsa: true,
     highlight: 'Best Rate · Instant Approval',
   };
 
@@ -104,7 +104,7 @@ export function compareWithCompetitors(offer: LoanOffer): CompetitorComparison[]
     const emi = calcEMI(amount, effectiveRate, tenure_months);
     const totalCost = emi * tenure_months;
     const processingFee = Math.round(amount * (comp.processing_fee_pct / 100));
-    const savings = totalCost + processingFee - (loanwizardTotalCost + loanwizardProcessingFee);
+    const savings = totalCost + processingFee - (finsaTotalCost + finsaProcessingFee);
 
     return {
       lender: comp.lender,
@@ -118,9 +118,9 @@ export function compareWithCompetitors(offer: LoanOffer): CompetitorComparison[]
       processing_fee_pct: comp.processing_fee_pct,
       approval_time: comp.approval_time,
       savings_vs_this: savings,
-      is_loanwizard: false,
+      is_finsa: false,
     };
   });
 
-  return [loanwizardEntry, ...competitorEntries];
+  return [finsaEntry, ...competitorEntries];
 }

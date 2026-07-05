@@ -1,4 +1,4 @@
-// WhatsApp Notification Service — Poonawalla Fincorp LoanWizard OS
+// WhatsApp Notification Service — Finsa AI
 // Mock implementation — replace with actual WhatsApp Business API in production
 
 import { logger } from '../lib/logger';
@@ -31,7 +31,7 @@ export class WhatsAppNotification {
    */
   static async sendOTPMessage(phone: string, otp: string): Promise<WhatsAppResponse> {
     const messageId = generateMessageId();
-    const message = `Your Finsa OTP is *${otp}*. Valid for 10 minutes. Do NOT share with anyone.\n\n_Poonawalla Fincorp_`;
+    const message = `Your Finsa OTP is *${otp}*. Valid for 10 minutes. Do NOT share with anyone.\n\n_Finsa AI_`;
 
     logger.info({
       event: 'whatsapp_otp_sent',
@@ -69,9 +69,9 @@ export class WhatsAppNotification {
       `📊 *Interest Rate:* ${offer.rate_pa}% p.a.`,
       `📅 *Monthly EMI:* ${formatINR(offer.emi)} for ${offer.tenure_months} months`,
       ``,
-      `✅ Accept your offer now: https://finsa.poonawallafincorp.com/offer`,
+      `✅ Accept your offer now: https://finsa.finsa.ai/offer`,
       ``,
-      `_Poonawalla Fincorp | RBI Licensed NBFC_`,
+      `_Finsa AI | RBI Licensed NBFC_`,
       `_To opt out, reply STOP_`,
     ].join('\n');
 
@@ -99,14 +99,14 @@ export class WhatsAppNotification {
     const messageId = generateMessageId();
 
     const message = [
-      `Hi! You've been pre-approved for a personal loan from *Poonawalla Fincorp*.`,
+      `Hi! You've been pre-approved for a personal loan from *Finsa AI*.`,
       ``,
       `🚀 Complete your application in just *3 minutes* via a quick video call:`,
       `👉 ${sessionUrl}`,
       ``,
       `✨ No branch visit needed | Instant approval | Rates from 9.99% p.a.`,
       ``,
-      `_Link valid for 24 hours. Poonawalla Fincorp | RBI Licensed NBFC_`,
+      `_Link valid for 24 hours. Finsa AI | RBI Licensed NBFC_`,
     ].join('\n');
 
     logger.info({
@@ -139,12 +139,12 @@ export class WhatsAppNotification {
       `📞 *Appeal Process:*`,
       `If you believe this decision is incorrect, you may appeal within 30 days:`,
       `• Call: 1800-266-3201 (Toll Free)`,
-      `• Email: grievance@poonawallafincorp.com`,
-      `• Visit: www.poonawallafincorp.com/grievance`,
+      `• Email: grievance@finsa.ai`,
+      `• Visit: www.finsa.ai/grievance`,
       ``,
       `You may re-apply after 90 days once the issue is resolved.`,
       ``,
-      `_Poonawalla Fincorp | RBI Licensed NBFC_`,
+      `_Finsa AI | RBI Licensed NBFC_`,
     ].join('\n');
 
     logger.info({

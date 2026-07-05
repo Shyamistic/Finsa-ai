@@ -1,8 +1,8 @@
-# Finsa — Agentic AI Video Loan Origination
+# Finsa AI - SBI Hackathon Agentic Banking Platform
 
-> **Built for TenzorX 2026 · Problem Statement 3 · Poonawalla Fincorp**
+> **Built for SBI Hackathon @ GFF 2026 · Finsa AI (Udyam/MSME startup)**
 
-Finsa is a production-grade, end-to-end digital loan origination platform that replaces paper forms and manual KYC with a **30-second AI video call**. A customer receives a secure link via SMS or WhatsApp, clicks it, speaks to Priya (our AI advisor), and receives a personalised loan offer — all without a branch visit.
+Finsa AI is a multi-agent banking journey platform built for SBI hackathon evaluation. It demonstrates real-time customer acquisition, digital adoption, and digital engagement flows with a guided conversational interface, compliance-first architecture, and production-ready orchestration patterns.
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18-61DAFB)](https://react.dev/)
@@ -17,14 +17,28 @@ Finsa is a production-grade, end-to-end digital loan origination platform that r
 
 | URL | What |
 |-----|------|
-| `https://finsa.poonawallafincorp.com/demo` | Judges demo (standalone, no backend needed) |
-| `https://finsa.poonawallafincorp.com/apply` | Start a real video session |
-| `https://finsa.poonawallafincorp.com/` | Landing page |
-| `https://finsa.poonawallafincorp.com/admin` | Admin dashboard (key required) |
+| `https://finsa.finsa.ai/demo` | Judges demo mode (recommended for evaluation) |
+| `https://finsa.finsa.ai/apply` | Start real-time session flow |
+| `https://finsa.finsa.ai/` | Landing page |
+| `https://finsa.finsa.ai/admin` | Admin dashboard (key required) |
 
 ---
 
-## The Problem We Solve
+## SBI Hackathon Theme Mapping
+
+| SBI Theme | Finsa AI Capability |
+|-----|------|
+| Customer Acquisition | Real-time lead scoring and intent-driven onboarding journey |
+| Digital Adoption | Contextual nudges for UPI/mobile banking/SIP/FD behaviors |
+| Digital Engagement | Life-event based recommendations and next-best-action pathing |
+
+This repository currently ships a strong demoable foundation. The SBI-focused production roadmap is defined in:
+- .kiro/specs/finsa-ai-sbi-platform/requirements.md
+- .kiro/specs/finsa-ai-sbi-platform/design.md
+
+---
+
+## Problem and Approach
 
 Traditional digital loan journeys suffer from:
 - **High drop-offs** — long forms, document uploads, branch visits
@@ -32,7 +46,7 @@ Traditional digital loan journeys suffer from:
 - **Manual KYC overhead** — human reviewers, slow turnaround
 - **No contextual understanding** — forms can't detect intent or inconsistency
 
-Finsa solves all four with a single 30-second video call.
+Finsa AI addresses these with an orchestrated conversational journey that combines onboarding, qualification, and contextual engagement.
 
 ---
 
@@ -206,7 +220,7 @@ Solana Devnet anchor + V-CIP PDF + WebSocket → Frontend
 - Explicit consent captured before session start
 - Data categories disclosed: video, audio, PAN, facial biometrics, financial, geo_ip
 - Purpose limitation: loan origination only
-- Withdrawal mechanism: `privacy@poonawallafincorp.com`
+- Withdrawal mechanism: `privacy@finsa.ai`
 - Retention period: 7 years (2555 days)
 
 ### Audit Chain
@@ -245,7 +259,7 @@ Five pre-configured profiles for the demo:
 
 ```bash
 git clone https://github.com/Shyamistic/Finsa-ai.git
-cd Finsa-ai/loanwizard-os
+cd Finsa-ai
 pnpm install
 ```
 
@@ -294,6 +308,13 @@ npm run dev
 | http://localhost:3000/risk | Risk dashboard |
 | http://localhost:4000/health | Backend health |
 | http://localhost:3001 | Grafana (admin/admin) |
+
+### 7. Judge Demo Fast Path
+
+1. Open `/demo` for deterministic walkthrough.
+2. Use 2-3 profiles (approved, medium-risk, rejected) to show explainability.
+3. Open `/risk` and `/admin` for operations visibility.
+4. End with SBI theme mapping from this README and .kiro specs.
 
 ---
 
@@ -403,7 +424,7 @@ Invoke-WebRequest -Uri "http://localhost:4000/sessions/$s/audit/verify" `
 ## Project Structure
 
 ```
-loanwizard-os/
+finsa-ai/
 ├── packages/
 │   ├── backend/
 │   │   └── src/
@@ -480,6 +501,30 @@ docker compose up --build
 - [ ] Set up WhatsApp Business API credentials
 - [ ] Enable Postgres SSL
 
+### Troubleshooting Deployed Backend Errors
+
+If judges see backend failures in production, verify these first:
+
+1. API key mismatch during migration:
+- Current demo key: `demo-key-finsa-2026`
+- Legacy compatibility key: `demo-key-loanwizard-2026`
+
+2. JSON payload size for document verification:
+- Session document upload uses base64 payload.
+- Backend now supports configurable limit via `JSON_BODY_LIMIT` (default `8mb`).
+
+3. Language validation:
+- Session creation supports `en`, `hi`, `mr`, `ta`.
+
+4. Core env values:
+- `DATABASE_URL`
+- `REDIS_URL`
+- `FRONTEND_URL`
+
+5. Health checks:
+- `GET /health`
+- `GET /metrics`
+
 ---
 
 ## Judging Criteria Mapping
@@ -496,7 +541,7 @@ docker compose up --build
 
 ## Team
 
-Built for **TenzorX 2026 National AI Hackathon** — Problem Statement 3: Agentic AI Video Call–Based Onboarding.
+Built by **Finsa AI** for SBI Hackathon @ GFF 2026 with a production-first startup roadmap.
 
 ---
 
@@ -506,4 +551,4 @@ MIT — see [LICENSE](LICENSE)
 
 ---
 
-*Finsa by Poonawalla Fincorp · Powered by AWS Bedrock · RBI V-CIP Compliant · DPDP Act 2023*
+*Finsa AI · Powered by AWS Bedrock · RBI V-CIP Compliant · DPDP Act 2023*

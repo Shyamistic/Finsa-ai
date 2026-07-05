@@ -3,7 +3,7 @@ export type Language = 'en' | 'hi' | 'mr' | 'ta';
 export const strings: Record<Language, Record<string, string>> = {
   en: {
     // Consent Page
-    'consent.title': 'Loan Application — Poonawalla Fincorp',
+    'consent.title': 'Loan Application — Finsa AI',
     'consent.subtitle': 'Video-Based Digital Loan Origination',
     'consent.heading': 'Before We Begin',
     'consent.intro': 'We need your consent to collect and process the following data during this video session:',
@@ -15,7 +15,7 @@ export const strings: Record<Language, Record<string, string>> = {
     'consent.data.geo': 'IP address for geo-verification',
     'consent.purpose': 'Purpose: Loan eligibility assessment and offer generation',
     'consent.retention': 'Retention: 7 years as per RBI guidelines',
-    'consent.withdrawal': 'You may withdraw consent at any time by contacting us at privacy@poonawallafincorp.com',
+    'consent.withdrawal': 'You may withdraw consent at any time by contacting us at privacy@finsa.ai',
     'consent.checkbox': 'I have read and agree to the above terms. I consent to the collection and processing of my data for loan origination purposes.',
     'consent.button': 'Start Video Session',
     'consent.dpdp': 'This consent is recorded per the Digital Personal Data Protection Act 2023 (India)',
@@ -81,7 +81,7 @@ export const strings: Record<Language, Record<string, string>> = {
     'admin.fraud_alerts': 'Fraud Alerts',
   },
   hi: {
-    'consent.title': 'लोन आवेदन — Poonawalla Fincorp',
+    'consent.title': 'लोन आवेदन — Finsa AI',
     'consent.subtitle': 'वीडियो-आधारित डिजिटल लोन',
     'consent.heading': 'शुरू करने से पहले',
     'consent.intro': 'इस वीडियो सत्र के दौरान निम्नलिखित डेटा एकत्र करने के लिए आपकी सहमति आवश्यक है:',
@@ -93,7 +93,7 @@ export const strings: Record<Language, Record<string, string>> = {
     'consent.data.geo': 'भू-सत्यापन के लिए IP पता',
     'consent.purpose': 'उद्देश्य: लोन पात्रता मूल्यांकन और ऑफर निर्माण',
     'consent.retention': 'अवधारण: RBI दिशानिर्देशों के अनुसार 7 वर्ष',
-    'consent.withdrawal': 'आप किसी भी समय privacy@poonawallafincorp.com पर संपर्क करके सहमति वापस ले सकते हैं',
+    'consent.withdrawal': 'आप किसी भी समय privacy@finsa.ai पर संपर्क करके सहमति वापस ले सकते हैं',
     'consent.checkbox': 'मैंने उपरोक्त शर्तें पढ़ी हैं और सहमत हूं। मैं लोन प्रक्रिया के लिए अपने डेटा के संग्रह और प्रसंस्करण के लिए सहमति देता/देती हूं।',
     'consent.button': 'वीडियो सत्र शुरू करें',
     'consent.dpdp': 'यह सहमति डिजिटल व्यक्तिगत डेटा संरक्षण अधिनियम 2023 (भारत) के अनुसार दर्ज की गई है',
@@ -149,7 +149,7 @@ export const strings: Record<Language, Record<string, string>> = {
     'admin.fraud_alerts': 'धोखाधड़ी अलर्ट',
   },
   mr: {
-    'consent.title': 'कर्ज अर्ज — Poonawalla Fincorp',
+    'consent.title': 'कर्ज अर्ज — Finsa AI',
     'consent.subtitle': 'व्हिडिओ-आधारित डिजिटल कर्ज',
     'consent.heading': 'सुरू करण्यापूर्वी',
     'consent.intro': 'या व्हिडिओ सत्रादरम्यान खालील डेटा गोळा करण्यासाठी आपली संमती आवश्यक आहे:',
@@ -161,7 +161,7 @@ export const strings: Record<Language, Record<string, string>> = {
     'consent.data.geo': 'भू-सत्यापनासाठी IP पत्ता',
     'consent.purpose': 'उद्देश: कर्ज पात्रता मूल्यांकन आणि ऑफर निर्मिती',
     'consent.retention': 'धारणा: RBI मार्गदर्शक तत्त्वांनुसार 7 वर्षे',
-    'consent.withdrawal': 'आपण कधीही privacy@poonawallafincorp.com वर संपर्क करून संमती मागे घेऊ शकता',
+    'consent.withdrawal': 'आपण कधीही privacy@finsa.ai वर संपर्क करून संमती मागे घेऊ शकता',
     'consent.checkbox': 'मी वरील अटी वाचल्या आहेत आणि सहमत आहे.',
     'consent.button': 'व्हिडिओ सत्र सुरू करा',
     'consent.dpdp': 'ही संमती डिजिटल वैयक्तिक डेटा संरक्षण कायदा 2023 नुसार नोंदवली आहे',
@@ -217,7 +217,7 @@ export const strings: Record<Language, Record<string, string>> = {
     'admin.fraud_alerts': 'फसवणूक अलर्ट',
   },
   ta: {
-    'consent.title': 'கடன் விண்ணப்பம் — Poonawalla Fincorp',
+    'consent.title': 'கடன் விண்ணப்பம் — Finsa AI',
     'consent.subtitle': 'வீடியோ அடிப்படையிலான டிஜிட்டல் கடன்',
     'consent.heading': 'தொடங்குவதற்கு முன்',
     'consent.intro': 'இந்த வீடியோ அமர்வின் போது பின்வரும் தரவை சேகரிக்க உங்கள் ஒப்புதல் தேவை:',
@@ -229,7 +229,7 @@ export const strings: Record<Language, Record<string, string>> = {
     'consent.data.geo': 'புவி சரிபார்ப்புக்கான IP முகவரி',
     'consent.purpose': 'நோக்கம்: கடன் தகுதி மதிப்பீடு மற்றும் சலுகை உருவாக்கம்',
     'consent.retention': 'தக்கவைப்பு: RBI வழிகாட்டுதல்களின்படி 7 ஆண்டுகள்',
-    'consent.withdrawal': 'privacy@poonawallafincorp.com இல் தொடர்பு கொண்டு எந்த நேரத்திலும் ஒப்புதலை திரும்பப் பெறலாம்',
+    'consent.withdrawal': 'privacy@finsa.ai இல் தொடர்பு கொண்டு எந்த நேரத்திலும் ஒப்புதலை திரும்பப் பெறலாம்',
     'consent.checkbox': 'மேற்கண்ட விதிமுறைகளை படித்து ஒப்புக்கொள்கிறேன்.',
     'consent.button': 'வீடியோ அமர்வை தொடங்கு',
     'consent.dpdp': 'இந்த ஒப்புதல் டிஜிட்டல் தனிப்பட்ட தரவு பாதுகாப்பு சட்டம் 2023 படி பதிவு செய்யப்பட்டுள்ளது',

@@ -1,4 +1,4 @@
--- LoanWizard OS — PostgreSQL Schema
+-- Finsa AI — PostgreSQL Schema
 -- Initialised automatically by Docker Compose via docker-entrypoint-initdb.d
 
 -- sessions

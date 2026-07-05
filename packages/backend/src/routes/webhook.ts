@@ -95,7 +95,7 @@ webhookRouter.post('/test', requireApiKey('api'), async (req: Request, res: Resp
       payload: {
         session_id: 'test-session-' + Date.now(),
         timestamp: new Date().toISOString(),
-        message: 'This is a test webhook delivery from LoanWizard OS',
+        message: 'This is a test webhook delivery from Finsa AI',
       },
     };
 
@@ -132,8 +132,8 @@ async function dispatchWithRetry(
         timeout: 5000,
         headers: {
           'Content-Type': 'application/json',
-          'X-LoanWizard-Event': (payload as { event?: string }).event ?? 'unknown',
-          'X-LoanWizard-Attempt': String(attempt),
+          'X-Finsa-Event': (payload as { event?: string }).event ?? 'unknown',
+          'X-Finsa-Attempt': String(attempt),
         },
       });
       return { success: true, attempts: attempt, status: response.status };

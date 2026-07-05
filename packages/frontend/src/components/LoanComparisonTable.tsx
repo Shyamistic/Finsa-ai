@@ -17,7 +17,7 @@ interface CompetitorRow {
   processing_fee: number;
   approval_time: string;
   savings_vs_this: number;
-  is_loanwizard: boolean;
+  is_finsa: boolean;
   highlight?: string;
 }
 
@@ -48,16 +48,16 @@ export default function LoanComparisonTable({ offer }: Props) {
       { lender: 'HDFC Bank', logo_initial: 'HB', rate: offer.rate_pa + 1.0, fee_pct: 2.5, time: '4-6 hrs' },
     ];
 
-    const loanwizard: CompetitorRow = {
-      lender: 'Poonawalla Fincorp',
-      logo_initial: 'PF',
+    const finsa: CompetitorRow = {
+      lender: 'Finsa AI',
+      logo_initial: 'FA',
       effective_rate: offer.rate_pa,
       emi: lwEmi,
       total_cost: lwTotal,
       processing_fee: lwFee,
       approval_time: '< 3 min',
       savings_vs_this: 0,
-      is_loanwizard: true,
+      is_finsa: true,
       highlight: 'Best Rate · Instant',
     };
 
@@ -74,16 +74,16 @@ export default function LoanComparisonTable({ offer }: Props) {
         processing_fee: fee,
         approval_time: c.time,
         savings_vs_this: (total + fee) - (lwTotal + lwFee),
-        is_loanwizard: false,
+        is_finsa: false,
       };
     });
 
-    return [loanwizard, ...compRows];
+    return [finsa, ...compRows];
   }, [offer, tenure]);
 
   const avgSavings = Math.round(
-    rows.filter(r => !r.is_loanwizard).reduce((s, r) => s + r.savings_vs_this, 0) /
-    rows.filter(r => !r.is_loanwizard).length
+    rows.filter(r => !r.is_finsa).reduce((s, r) => s + r.savings_vs_this, 0) /
+    rows.filter(r => !r.is_finsa).length
   );
 
   return (
@@ -92,7 +92,7 @@ export default function LoanComparisonTable({ offer }: Props) {
       <div className="flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-3">
         <TrendingDown className="w-5 h-5 text-emerald-400 flex-shrink-0" />
         <p className="text-sm text-emerald-300">
-          You save <strong>{formatINR(avgSavings)}</strong> vs market average over {tenure} months with Poonawalla Fincorp
+          You save <strong>{formatINR(avgSavings)}</strong> vs market average over {tenure} months with Finsa AI
         </p>
       </div>
 
@@ -114,7 +114,7 @@ export default function LoanComparisonTable({ offer }: Props) {
               <tr
                 key={row.lender}
                 className={`border-b border-gray-800/50 last:border-0 transition-colors ${
-                  row.is_loanwizard
+                  row.is_finsa
                     ? 'bg-blue-500/10 hover:bg-blue-500/15'
                     : 'bg-gray-900 hover:bg-gray-800/50'
                 }`}
@@ -124,20 +124,20 @@ export default function LoanComparisonTable({ offer }: Props) {
                 <td className="px-4 py-3.5">
                   <div className="flex items-center gap-3">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0 ${
-                      row.is_loanwizard
+                      row.is_finsa
                         ? 'bg-gradient-to-br from-blue-500 to-violet-600 text-white'
                         : 'bg-gray-700 text-gray-300'
                     }`}>
                       {row.logo_initial}
                     </div>
                     <div>
-                      <p className={`font-semibold ${row.is_loanwizard ? 'text-white' : 'text-gray-300'}`}>
+                      <p className={`font-semibold ${row.is_finsa ? 'text-white' : 'text-gray-300'}`}>
                         {row.lender}
                       </p>
                       {row.highlight && (
                         <span className="text-xs text-blue-400 font-medium">{row.highlight}</span>
                       )}
-                      {!row.is_loanwizard && row.savings_vs_this > 0 && (
+                      {!row.is_finsa && row.savings_vs_this > 0 && (
                         <span className="text-xs text-red-400">
                           +{formatINR(row.savings_vs_this)} more
                         </span>
@@ -148,28 +148,28 @@ export default function LoanComparisonTable({ offer }: Props) {
 
                 {/* Rate */}
                 <td className="px-4 py-3.5 text-right">
-                  <span className={`font-bold ${row.is_loanwizard ? 'text-emerald-400' : 'text-gray-300'}`}>
+                  <span className={`font-bold ${row.is_finsa ? 'text-emerald-400' : 'text-gray-300'}`}>
                     {row.effective_rate}%
                   </span>
                 </td>
 
                 {/* EMI */}
                 <td className="px-4 py-3.5 text-right">
-                  <span className={`font-semibold ${row.is_loanwizard ? 'text-white' : 'text-gray-400'}`}>
+                  <span className={`font-semibold ${row.is_finsa ? 'text-white' : 'text-gray-400'}`}>
                     {formatINR(row.emi)}
                   </span>
                 </td>
 
                 {/* Total Cost */}
                 <td className="px-4 py-3.5 text-right hidden md:table-cell">
-                  <span className={row.is_loanwizard ? 'text-white' : 'text-gray-400'}>
+                  <span className={row.is_finsa ? 'text-white' : 'text-gray-400'}>
                     {formatINR(row.total_cost)}
                   </span>
                 </td>
 
                 {/* Processing Fee */}
                 <td className="px-4 py-3.5 text-right hidden md:table-cell">
-                  <span className={row.is_loanwizard ? 'text-emerald-400' : 'text-gray-400'}>
+                  <span className={row.is_finsa ? 'text-emerald-400' : 'text-gray-400'}>
                     {formatINR(row.processing_fee)}
                   </span>
                 </td>
@@ -177,8 +177,8 @@ export default function LoanComparisonTable({ offer }: Props) {
                 {/* Approval Time */}
                 <td className="px-4 py-3.5 text-right">
                   <div className="flex items-center justify-end gap-1.5">
-                    {row.is_loanwizard && <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />}
-                    <span className={`text-xs font-medium ${row.is_loanwizard ? 'text-emerald-400' : 'text-gray-500'}`}>
+                    {row.is_finsa && <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />}
+                    <span className={`text-xs font-medium ${row.is_finsa ? 'text-emerald-400' : 'text-gray-500'}`}>
                       {row.approval_time}
                     </span>
                   </div>

@@ -1,4 +1,4 @@
-// Document Intelligence Service — Poonawalla Fincorp LoanWizard OS
+// Document Intelligence Service — Finsa AI
 // Mock implementation — production uses AWS Textract + custom ML models
 
 export interface PanDetails {

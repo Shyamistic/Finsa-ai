@@ -1,6 +1,6 @@
 # Finsa AI: Agentic AI Video Call-Based Onboarding
 > **A Tenzor National Hackathon Submission**
-> Inspired by the precision, scale, and legacy of Poonawalla Fincorp.
+> Inspired by the precision, scale, and legacy of Finsa AI.
 
 ---
 
@@ -110,7 +110,7 @@
 5.  **Scalability:** High-concurrency architecture delivering ultra-low latency decisioning.
 
 **Live Demo & Links:**
-*   **GitHub:** [github.com/shyam-fincorp/finsa-ai]
+*   **GitHub:** [github.com/Shyamistic/Finsa-ai]
 *   **Live App:** [finsa-ai.vercel.app]
 
 **Design Idea:** A strong, confident closing slide. Checkmarks next to each of the 5 judging criteria. Large, clickable links for the demo and code.

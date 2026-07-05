@@ -3,15 +3,18 @@ services:
     image: postgres:16-alpine
     ports:
       - '5432:5432'
+    labels:
+      - "app.name=finsa-ai"
+      - "app.component=postgres"
     environment:
       POSTGRES_USER: lw
       POSTGRES_PASSWORD: lw
-      POSTGRES_DB: loanwizard
+      POSTGRES_DB: finsa
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./packages/backend/src/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U lw -d loanwizard']
+      test: ['CMD-SHELL', 'pg_isready -U lw -d finsa']
       interval: 3s
       timeout: 3s
       retries: 10
@@ -20,6 +23,9 @@ services:
     image: redis:7-alpine
     ports:
       - '6379:6379'
+    labels:
+      - "app.name=finsa-ai"
+      - "app.component=redis"
     command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
 
 volumes:

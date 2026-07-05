@@ -53,7 +53,7 @@ async function loadPolicyRules(): Promise<PolicyRule[]> {
 }
 
 function getDefaultRules(): PolicyRule[] {
-  // Poonawalla Fincorp actual rate bands (2025)
+  // Finsa AI actual rate bands (2025)
   return [
     // Personal Loan — Salaried Urban (best profile)
     { id: 'r001', persona: 'Salaried-Urban', risk_band: 'Low', min_amount: 100000, max_amount: 5000000, min_rate: 9.99, max_rate: 13.0, tenures: [12, 24, 36, 60, 84] },

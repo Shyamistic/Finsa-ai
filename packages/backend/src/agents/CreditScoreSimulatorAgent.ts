@@ -1,4 +1,4 @@
-// Credit Score Simulator Agent — Poonawalla Fincorp LoanWizard OS
+// Credit Score Simulator Agent — Finsa AI
 import { EventBus } from '../orchestrator/EventBus';
 import { IAgent, AgentStatus } from './IAgent';
 import { logger } from '../lib/logger';

@@ -2,7 +2,7 @@
  * AutoFillAgent — Nova Act-powered form auto-fill
  *
  * This is the "Auto-Fill & Alternate Data Generation" node from the
- * Poonawalla Fincorp architecture diagram. It:
+ * Finsa AI architecture diagram. It:
  *
  * 1. Listens to speech_intel events as entities are extracted turn-by-turn
  * 2. Validates each field in real-time (format, range, consistency checks)

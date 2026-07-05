@@ -10,9 +10,14 @@ export type AgentId =
   | 'offer'
   | 'compliance'
   | 'auto_fill'
-  | 'credit_score_simulator';
+  | 'credit_score_simulator'
+  // New agents for Finsa AI multi-product platform
+  | 'customer_acquisition'
+  | 'digital_adoption'
+  | 'life_event'
+  | 'multilingual';
 
-export type ChannelName = `session:${string}:${AgentId | 'orchestrator'}`;
+export type ChannelName = `session:${string}:${AgentId | 'orchestrator' | 'acquisition' | 'adoption' | 'engagement' | 'multilingual'}`;
 
 export class EventBus {
   private publisher: Redis;

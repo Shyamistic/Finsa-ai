@@ -25,7 +25,7 @@ export default function SessionPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const language: Language = (location.state as { language?: Language })?.language || 'en';
-  const apiKey: string = (location.state as { apiKey?: string })?.apiKey || 'demo-key-loanwizard-2026';
+  const apiKey: string = (location.state as { apiKey?: string })?.apiKey || 'demo-key-finsa-2026';
 
   const { tier, probing } = useBandwidthProbe();
   const { stream, startStream } = useWebRTC(tier);
@@ -266,16 +266,36 @@ export default function SessionPage() {
     if (!sessionId || !file) return;
     setDocUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('document', file);
-      formData.append('doc_type', docType);
-      await axios.post(`${API_URL}/sessions/${sessionId}/documents/verify`, formData, {
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          'Content-Type': 'multipart/form-data',
-        },
-        timeout: 30000,
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      await new Promise<void>((resolve, reject) => {
+        reader.onload = async () => {
+          try {
+            const dataUrl = reader.result as string;
+            const matches = dataUrl.match(/^data:(.+);base64,(.*)$/);
+            if (!matches) throw new Error('Invalid file format');
+            const mime_type = matches[1];
+            const image_base64 = matches[2];
+
+            await axios.post(`${API_URL}/sessions/${sessionId}/documents/verify`, {
+              image_base64,
+              mime_type,
+              doc_type: docType
+            }, {
+              headers: {
+                Authorization: `Bearer ${apiKey}`,
+                'Content-Type': 'application/json',
+              },
+              timeout: 30000,
+            });
+            resolve();
+          } catch (e) {
+            reject(e);
+          }
+        };
+        reader.onerror = reject;
       });
+
       if (docType === 'pan') setPanVerified(true);
       else setAadhaarVerified(true);
       // Notify Priya
@@ -503,7 +523,7 @@ export default function SessionPage() {
                 </div>
                 <div>
                   <p className="text-base font-semibold text-white">Priya</p>
-                  <p className="text-xs text-white/40">AI Loan Advisor · Poonawalla Fincorp</p>
+                  <p className="text-xs text-white/40">AI Loan Advisor · Finsa AI</p>
                 </div>
                 {isSpeaking && (
                   <div className="ml-auto flex gap-0.5 items-end">

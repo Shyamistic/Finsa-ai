@@ -39,7 +39,8 @@ const corsOptions: cors.CorsOptions = {
 
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(cors(corsOptions));
-app.use(express.json({ limit: '1mb' }));
+// Judge/demo document verification sends base64 payloads; 1mb can cause 413 in production.
+app.use(express.json({ limit: process.env.JSON_BODY_LIMIT || '8mb' }));
 
 // Rate limiting — relaxed for dev/demo (increase for production)
 const sessionLimiter = rateLimit({ windowMs: 60_000, max: 100, standardHeaders: true });
@@ -90,6 +91,25 @@ io.on('connection', (socket) => {
   socket.on('join_session', (sessionId: string) => {
     socket.join(`session:${sessionId}`);
     logger.info({ event: 'socket_joined_session', socketId: socket.id, session_id: sessionId });
+  });
+
+  socket.on('transcript', async (data: { session_id: string; transcript: string }) => {
+    if (!data.session_id || !data.transcript) return;
+    try {
+      await orchestrator.processTranscript(data.session_id, data.transcript);
+    } catch (e) {
+      logger.error({ event: 'socket_transcript_error', err: e });
+    }
+  });
+
+  socket.on('liveness_result', async (data: any) => {
+    if (!data.session_id) return;
+    try {
+      const { session_id, ...result } = data;
+      await orchestrator.processLivenessResult(session_id, result);
+    } catch (e) {
+      logger.error({ event: 'socket_liveness_error', err: e });
+    }
   });
 
   socket.on('disconnect', () => {

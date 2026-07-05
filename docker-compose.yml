@@ -5,6 +5,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - '3000:3000'
+    labels:
+      - "app.name=finsa-ai"
+      - "app.component=frontend"
     environment:
       - VITE_API_URL=http://localhost:4000
       - VITE_WS_URL=ws://localhost:4000
@@ -17,6 +20,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - '4000:4000'
+    labels:
+      - "app.name=finsa-ai"
+      - "app.component=backend"
     depends_on:
       postgres:
         condition: service_healthy
@@ -24,7 +30,7 @@ services:
         condition: service_started
     env_file: .env
     environment:
-      - DATABASE_URL=postgresql://lw:lw@postgres:5432/loanwizard
+      - DATABASE_URL=postgresql://lw:lw@postgres:5432/finsa
       - REDIS_URL=redis://redis:6379
       - NODE_ENV=production
 
@@ -33,12 +39,12 @@ services:
     environment:
       POSTGRES_USER: lw
       POSTGRES_PASSWORD: lw
-      POSTGRES_DB: loanwizard
+      POSTGRES_DB: finsa
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./packages/backend/src/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U lw -d loanwizard']
+      test: ['CMD-SHELL', 'pg_isready -U lw -d finsa']
       interval: 5s
       timeout: 5s
       retries: 5

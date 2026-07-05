@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Play, Pause, RotateCcw, ChevronDown, ExternalLink,
@@ -12,8 +12,8 @@ import LoanComparisonTable from '../components/LoanComparisonTable';
 import EmiCalculatorWidget from '../components/EmiCalculatorWidget';
 import VcipCompliancePanel from '../components/VcipCompliancePanel';
 
-// YouTube demo video ID — replace with your actual video ID after uploading
-const YOUTUBE_VIDEO_ID = '6bLA20_10tw'; // placeholder — update after YouTube upload
+// YouTube demo video ID - replace with your actual video ID after uploading
+const YOUTUBE_VIDEO_ID = '6bLA20_10tw'; // placeholder - update after YouTube upload
 
 const DEMO_PROFILES = [
   {
@@ -21,7 +21,7 @@ const DEMO_PROFILES = [
     riskBand: 'Low', creditScore: 780, creditBand: 'Excellent', income: 85000, employment: 'Salaried',
     city: 'Mumbai', fraudScore: 8, outcome: 'approved',
     offerAmount: 1500000, offerRate: 9.99, offerEmi: 32500, tenure: 36,
-    color: 'green', description: 'Low-risk salaried professional — best offer',
+    color: 'green', description: 'Low-risk salaried professional - best offer',
     responses: [
       "Hi, I'm looking for a personal loan for home renovation.",
       "My monthly salary is around 85,000 rupees. I work at TCS as a software engineer.",
@@ -34,7 +34,7 @@ const DEMO_PROFILES = [
     riskBand: 'Medium', creditScore: 640, creditBand: 'Fair', income: 55000, employment: 'Self-Employed',
     city: 'Ahmedabad', fraudScore: 22, outcome: 'approved',
     offerAmount: 800000, offerRate: 14.5, offerEmi: 18900, tenure: 36,
-    color: 'yellow', description: 'Medium-risk self-employed — moderate offer',
+    color: 'yellow', description: 'Medium-risk self-employed - moderate offer',
     responses: [
       "Mujhe business ke liye loan chahiye, apni shop expand karni hai.",
       "Main self-employed hoon, monthly around 55,000 kamaata hoon.",
@@ -47,7 +47,7 @@ const DEMO_PROFILES = [
     riskBand: 'High', creditScore: 580, creditBand: 'Poor', income: 120000, employment: 'MSME-Owner',
     city: 'Coimbatore', fraudScore: 35, outcome: 'approved',
     offerAmount: 2000000, offerRate: 17.0, offerEmi: 49800, tenure: 36,
-    color: 'orange', description: 'High-risk MSME owner — constrained offer',
+    color: 'orange', description: 'High-risk MSME owner - constrained offer',
     responses: [
       "I need a business loan for machinery purchase for my manufacturing unit.",
       "I run an MSME, monthly turnover around 1.2 lakhs net income.",
@@ -60,7 +60,7 @@ const DEMO_PROFILES = [
     riskBand: 'High', creditScore: 300, creditBand: 'Very Poor', income: 0, employment: 'Unknown',
     city: 'Unknown', fraudScore: 95, outcome: 'rejected',
     offerAmount: 0, offerRate: 0, offerEmi: 0, tenure: 12,
-    color: 'red', description: 'Fraud-flagged profile — session rejected',
+    color: 'red', description: 'Fraud-flagged profile - session rejected',
     responses: [
       "I want a loan for investment purposes.",
       "My income is variable, around 2 lakhs per month.",
@@ -73,7 +73,7 @@ const DEMO_PROFILES = [
     riskBand: 'Medium', creditScore: 0, creditBand: 'NTC', income: 30000, employment: 'Salaried',
     city: 'Jaipur', fraudScore: 12, outcome: 'approved',
     offerAmount: 300000, offerRate: 18.0, offerEmi: 10800, tenure: 36,
-    color: 'blue', description: 'No credit history (NTC) — instant loan product',
+    color: 'blue', description: 'No credit history (NTC) - instant loan product',
     responses: [
       "I need a small loan for my education fees.",
       "I just started working, salary is 30,000 per month.",
@@ -190,7 +190,7 @@ export default function DemoPage() {
     }, 1000));
 
     timelineRef.current.push(setTimeout(() => {
-      setChatHistory([{ role: 'agent', text: "Hi! I'm Priya from Poonawalla Fincorp. I'll help you get a personalised loan offer in just a few minutes. What are you looking to use the loan for?", ts: Date.now() }]);
+      setChatHistory([{ role: 'agent', text: "Hi, I am Priya from the SBI pilot by Finsa AI. I will help you complete a personalized banking journey in a few minutes. What would you like to start with today?", ts: Date.now() }]);
       addAuditEntry('session_started', 'greeting_sent');
     }, 1500));
 
@@ -220,7 +220,7 @@ export default function DemoPage() {
       "Got it! Could you please share your PAN card number?",
       isRejected
         ? "I'm sorry, we're unable to process your application at this time due to verification issues."
-        : "Thank you! I have all the details. Generating your personalised offer now — just a moment!",
+        : 'Thank you. I have all the details. Generating your personalized output now - just a moment!',
     ];
 
     profile.responses.forEach((resp, i) => {
@@ -290,11 +290,11 @@ export default function DemoPage() {
       <div className="bg-blue-600/10 border-b border-blue-500/20 py-2 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-center gap-6 flex-wrap text-xs text-blue-300/80">
           {[
-            { label: 'AUM', value: 'Rs55,017 Cr' },
-            { label: 'Customers', value: '7M+' },
-            { label: 'From', value: '9.99% p.a.' },
-            { label: 'Rating', value: 'AAA/Stable' },
-            { label: 'Loans Disbursed', value: '61M+' },
+            { label: 'Focus', value: 'SBI Hackathon 2026' },
+            { label: 'Pillars', value: '3 covered' },
+            { label: 'Journeys', value: 'Acq + Adoption + Engage' },
+            { label: 'Compliance', value: 'DPDP + RBI aligned' },
+            { label: 'Mode', value: 'Judge demo' },
           ].map(s => (
             <div key={s.label} className="flex items-center gap-1.5">
               <span className="text-blue-400/50">|</span>
@@ -314,11 +314,11 @@ export default function DemoPage() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-white text-sm">Poonawalla Fincorp</span>
+                <span className="font-bold text-white text-sm">Finsa AI x SBI Pilot</span>
                 <span className="text-gray-600 text-xs">|</span>
-                <span className="text-xs text-gray-400">Finsa</span>
+                <span className="text-xs text-gray-400">Hackathon Build</span>
               </div>
-              <span className="text-xs text-blue-400/70">Agentic AI Video Loan Origination</span>
+              <span className="text-xs text-blue-400/70">Agentic Banking Orchestration Demo</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -334,14 +334,14 @@ export default function DemoPage() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-1.5 mb-4">
             <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-xs text-blue-300">Live Demo — Judges Mode</span>
+            <span className="text-xs text-blue-300">Live Demo - Judges Mode</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
-            From Hello to Loan Offer in{' '}
+            From Intent to Outcome in{' '}
             <span className="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">30 Seconds</span>
           </h1>
           <p className="text-gray-400 text-sm max-w-2xl mx-auto">
-            7 AI agents run in parallel — liveness detection, speech intelligence, fraud scoring, bureau lookup, persona classification, offer generation, and blockchain audit — all in one video call.
+            7 AI agents run in parallel - liveness detection, speech intelligence, fraud scoring, bureau lookup, persona classification, offer generation, and audit tracing in one guided conversation.
           </p>
         </div>
 
@@ -374,7 +374,7 @@ export default function DemoPage() {
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center text-xs font-bold text-white">{p.name.charAt(0)}</div>
                         <div>
                           <div className="font-medium text-white text-sm">{p.name}</div>
-                          <div className="text-xs text-gray-400">{p.employment} · {p.city}</div>
+                          <div className="text-xs text-gray-400">{p.employment} - {p.city}</div>
                         </div>
                       </div>
                       <div className="text-right">
@@ -417,7 +417,7 @@ export default function DemoPage() {
           <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex items-center gap-3">
             <XCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
             <div>
-              <div className="font-semibold text-red-400">Session Rejected — Fraud Score {selectedProfile.fraudScore}/100</div>
+              <div className="font-semibold text-red-400">Session Rejected - Fraud Score {selectedProfile.fraudScore}/100</div>
               <div className="text-sm text-red-300/70">Geo mismatch + PAN anomaly detected. V-CIP audit trail preserved on-chain.</div>
             </div>
           </div>
@@ -426,8 +426,8 @@ export default function DemoPage() {
           <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl flex items-center gap-3">
             <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
             <div className="flex-1">
-              <div className="font-semibold text-green-400">Offer Generated — Rs{(selectedProfile.offerAmount / 100000).toFixed(1)}L @ {selectedProfile.offerRate}% p.a.</div>
-              <div className="text-sm text-green-300/70">EMI Rs{selectedProfile.offerEmi.toLocaleString('en-IN')}/mo · Audit anchored on Solana Devnet</div>
+              <div className="font-semibold text-green-400">Offer Generated - Rs{(selectedProfile.offerAmount / 100000).toFixed(1)}L @ {selectedProfile.offerRate}% p.a.</div>
+              <div className="text-sm text-green-300/70">EMI Rs{selectedProfile.offerEmi.toLocaleString('en-IN')}/mo - Audit anchored on Solana Devnet</div>
             </div>
             {solanaSignature && (
               <a href={'https://explorer.solana.com/tx/' + solanaSignature + '?cluster=devnet'} target="_blank" rel="noopener noreferrer"
@@ -494,10 +494,10 @@ export default function DemoPage() {
                       {livenessResult && <div className="absolute bottom-3 left-3 text-xs text-gray-400 bg-gray-900/80 rounded px-2 py-1">Age est: {livenessResult.ageEstimate}y</div>}
                       <div className="absolute bottom-3 right-3 flex items-center gap-1.5 text-xs text-gray-400 bg-gray-900/80 rounded px-2 py-1">
                         <Globe className="w-3 h-3" />
-                        {geoData.country === 'IN' ? <span className="text-green-400">IN ✓</span> : <span className="text-red-400">{geoData.country} ✗</span>}
+                        {geoData.country === 'IN' ? <span className="text-green-400">IN PASS</span> : <span className="text-red-400">{geoData.country} BLOCKED</span>}
                         <span>{geoData.city}</span>
                       </div>
-                      {isPlaying && <div className="absolute top-3 left-3 flex items-center gap-1.5 text-xs text-red-400 bg-gray-900/80 rounded px-2 py-1"><span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />LIVE · REC</div>}
+                      {isPlaying && <div className="absolute top-3 left-3 flex items-center gap-1.5 text-xs text-red-400 bg-gray-900/80 rounded px-2 py-1"><span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />LIVE - REC</div>}
                       {/* Agent processing indicator */}
                       {completedAgents > 0 && completedAgents < 7 && (
                         <div className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-xs text-blue-300 bg-blue-900/60 border border-blue-500/30 rounded-full px-3 py-1">
@@ -509,7 +509,7 @@ export default function DemoPage() {
                   )}
                 </div>
                 <div className="px-4 py-3 border-t border-gray-800 flex items-center justify-between">
-                  <span className="text-xs text-gray-400">WebRTC · 720p · {geoData.city}</span>
+                  <span className="text-xs text-gray-400">WebRTC - 720p - {geoData.city}</span>
                   <span className="text-xs text-gray-500">Profile {selectedProfile.id}: {selectedProfile.name}</span>
                 </div>
               </div>
@@ -535,7 +535,7 @@ export default function DemoPage() {
             <div className="bg-gray-900 border border-gray-800 rounded-xl flex flex-col" style={{ height: '520px' }}>
               <div className="px-4 py-3 border-b border-gray-800 flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-sm font-medium text-white">Priya — AI Loan Advisor</span>
+                <span className="text-sm font-medium text-white">Priya - AI Loan Advisor</span>
                 <span className="ml-auto text-xs text-gray-500">Hindi / English</span>
               </div>
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
@@ -719,7 +719,7 @@ export default function DemoPage() {
             <div className="aspect-video">
               <iframe
                 src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`}
-                title="Finsa — Full Demo"
+                title="Finsa SBI Pilot Full Demo"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="w-full h-full"
@@ -738,15 +738,15 @@ export default function DemoPage() {
                     <path d="M8 5v14l11-7z"/>
                   </svg>
                 </div>
-                <p className="text-white font-semibold text-lg">Finsa — Full Demo</p>
-                <p className="text-gray-400 text-sm mt-1">Poonawalla Fincorp · Agentic AI Video Loan Origination</p>
-                <p className="text-gray-600 text-xs mt-2">Click to play · ~3 minutes</p>
+                <p className="text-white font-semibold text-lg">Finsa SBI Pilot Full Demo</p>
+                <p className="text-gray-400 text-sm mt-1">Agentic AI Banking for Acquisition, Adoption, and Engagement</p>
+                <p className="text-gray-600 text-xs mt-2">Click to play - around 3 minutes</p>
               </div>
             </div>
           )}
           <div className="px-5 py-3 border-t border-gray-800 flex items-center justify-between">
             <p className="text-xs text-gray-500">
-              Shows: Consent → Liveness → Priya AI → 7 Agents → Offer → Solana Audit
+              Shows: Consent to Liveness to Priya AI to 7 Agents to Outcome to Audit
             </p>
             <a
               href={`https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}`}
@@ -763,7 +763,7 @@ export default function DemoPage() {
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-2"><Star className="w-4 h-4 text-yellow-400" /><span className="text-sm font-medium text-white">White-Label SDK</span></div>
-            <p className="text-xs text-gray-400 mb-3">Embed Finsa in any NBFC/bank portal with 3 lines of JS.</p>
+            <p className="text-xs text-gray-400 mb-3">Embed this journey in SBI or partner portals with 3 lines of JS.</p>
             <code className="text-xs text-green-400 bg-gray-800 rounded p-2 block font-mono">{'<script src="finsa-sdk.js"></script>'}</code>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">

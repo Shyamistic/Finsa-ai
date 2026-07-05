@@ -1,4 +1,4 @@
-// EMI Calculator Service — Poonawalla Fincorp LoanWizard OS
+// EMI Calculator Service — Finsa AI
 
 export interface AmortizationRow {
   month: number;

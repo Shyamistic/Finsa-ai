@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, AlertTriangle, CheckCircle, TrendingUp, Users, XCircle, MapPin, Clock, Zap } from 'lucide-react';
 
@@ -22,10 +22,10 @@ const MOCK_SESSIONS: SessionRow[] = [
 ];
 
 const ALERTS = [
-  { id: 1, severity: 'critical', message: 'Fraud score 95 — session PQRST****U rejected', ts: Date.now() - 480000 },
-  { id: 2, severity: 'warning', message: 'Geo mismatch detected — IP outside India', ts: Date.now() - 600000 },
+  { id: 1, severity: 'critical', message: 'Fraud score 95 - session PQRST****U rejected', ts: Date.now() - 480000 },
+  { id: 2, severity: 'warning', message: 'Geo mismatch detected - IP outside India', ts: Date.now() - 600000 },
   { id: 3, severity: 'info', message: 'Policy hot-reload triggered by admin', ts: Date.now() - 900000 },
-  { id: 4, severity: 'info', message: 'Solana anchor successful — tx confirmed', ts: Date.now() - 1200000 },
+  { id: 4, severity: 'info', message: 'Solana anchor successful - tx confirmed', ts: Date.now() - 1200000 },
 ];
 
 const CITIES = [
@@ -80,7 +80,7 @@ export default function RiskDashboard() {
             <div className="w-9 h-9 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl flex items-center justify-center"><Shield className="w-4 h-4 text-white" /></div>
             <div>
               <div className="font-bold text-white text-sm">Risk Dashboard</div>
-              <div className="text-xs text-gray-400">Poonawalla Fincorp · Finsa</div>
+              <div className="text-xs text-gray-400">Finsa AI - SBI Pilot Risk Console</div>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -194,7 +194,7 @@ export default function RiskDashboard() {
 
         {/* Geographic distribution */}
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-          <h3 className="font-semibold text-white mb-4 flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" />Geographic Distribution — India</h3>
+          <h3 className="font-semibold text-white mb-4 flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-400" />Geographic Distribution - India</h3>
           <div className="relative bg-gray-800/50 rounded-xl overflow-hidden" style={{ height: '200px' }}>
             <div className="absolute inset-0 flex items-center justify-center text-gray-600 text-sm">India Map Placeholder</div>
             {CITIES.map(city => (

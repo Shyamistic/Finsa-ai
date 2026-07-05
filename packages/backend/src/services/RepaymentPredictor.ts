@@ -1,4 +1,4 @@
-// Repayment Behavior Predictor — Poonawalla Fincorp LoanWizard OS
+// Repayment Behavior Predictor — Finsa AI
 
 export interface RepaymentProfile {
   credit_score: number | null;

@@ -128,6 +128,15 @@ export class Orchestrator {
     await agent.processTranscript(transcript);
   }
 
+  async processLivenessResult(sessionId: string, result: any): Promise<void> {
+    const agents = this.activeSessions.get(sessionId);
+    if (!agents) return;
+    const visualAgent = agents.get('visual_intel');
+    if (visualAgent && 'injectLivenessResult' in visualAgent) {
+      (visualAgent as any).injectLivenessResult(result);
+    }
+  }
+
   async persistSessionState(sessionId: string, state: unknown): Promise<void> {    await this.redis.setex(`resume:${sessionId}`, 600, JSON.stringify(state));
   }
 

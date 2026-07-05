@@ -1,4 +1,4 @@
-// CIBIL Score Integration Mock — Poonawalla Fincorp LoanWizard OS
+// CIBIL Score Integration Mock — Finsa AI
 // Production: replace with TransUnion CIBIL API v3
 
 export interface CibilAccount {
@@ -162,7 +162,7 @@ export class CibilIntegration {
       return {
         band: 'Fair',
         description: 'No credit history (NTC). You are new to credit.',
-        loan_eligibility: 'Eligible for Poonawalla Fincorp Instant Loan up to ₹3 Lakh',
+        loan_eligibility: 'Eligible for Finsa AI Instant Loan up to ₹3 Lakh',
         min_rate: 16.0,
         max_rate: 22.0,
       };

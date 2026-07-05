@@ -49,11 +49,10 @@ export class BureauRiskAgent implements IAgent {
     this.startTime = Date.now();
     logger.info({ event: 'agent_start', agent: this.agentId, session_id: this.sessionId });
 
-    // Wait for PAN from speech intel
     this.bus.subscribe(`session:${this.sessionId}:speech_intel`, (data) => {
       const d = data as { interview_complete?: boolean; entities?: { pan?: string; income?: number; employment_type?: string } };
-      if (d.interview_complete && d.entities?.pan) {
-        this.lookupBureau(d.entities.pan, d.entities);
+      if (d.interview_complete) {
+        this.lookupBureau(d.entities?.pan || 'UNKNOWN', d.entities);
       }
     });
   }

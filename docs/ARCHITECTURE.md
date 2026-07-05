@@ -191,7 +191,7 @@ Used for two tasks:
 ```
 Temperature: 0.3
 Max tokens: 80 (keep responses short)
-System prompt: Priya personality + Poonawalla Fincorp context
+System prompt: Priya personality + Finsa AI context
 ```
 
 **2. Entity Extraction**

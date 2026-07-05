@@ -1,12 +1,12 @@
 /**
- * LoanWizard OS SDK — v1.0.0
- * Zero-dependency embeddable iframe SDK for Poonawalla Fincorp integration
+ * Finsa AI SDK — v1.0.0
+ * Zero-dependency embeddable iframe SDK for Finsa AI integration
  *
  * Usage:
- *   const wizard = new LoanWizard({
- *     baseUrl: 'https://loanwizard.poonawallafincorp.com',
+ *   const wizard = new FinsaAI({
+ *     baseUrl: 'https://app.finsa.ai',
  *     apiKey: 'your-api-key',
- *     institutionName: 'Poonawalla Fincorp',
+ *     institutionName: 'Finsa AI',
  *     primaryColor: '#1a56db',
  *     logo: 'https://your-cdn.com/logo.png',
  *     language: 'en',
@@ -18,12 +18,12 @@
 (function (global) {
   'use strict';
 
-  function LoanWizard(config) {
+  function FinsaAI(config) {
     if (!config || !config.baseUrl || !config.apiKey) {
-      throw new Error('LoanWizard: baseUrl and apiKey are required');
+      throw new Error('FinsaAI: baseUrl and apiKey are required');
     }
     this.config = Object.assign({
-      institutionName: 'LoanWizard',
+      institutionName: 'Finsa AI',
       primaryColor: '#1a56db',
       language: 'en',
     }, config);
@@ -32,10 +32,10 @@
     this._messageHandler = null;
   }
 
-  LoanWizard.prototype.mount = function (containerId) {
+  FinsaAI.prototype.mount = function (containerId) {
     var container = document.getElementById(containerId);
     if (!container) {
-      throw new Error('LoanWizard: container element "' + containerId + '" not found');
+      throw new Error('FinsaAI: container element "' + containerId + '" not found');
     }
     this._container = container;
 
@@ -71,22 +71,22 @@
       if (!data || !data.type) return;
 
       switch (data.type) {
-        case 'LOANWIZARD_COMPLETE':
+        case 'FINSA_COMPLETE':
           if (typeof self.config.onComplete === 'function') {
             self.config.onComplete(data.result);
           }
           break;
-        case 'LOANWIZARD_ERROR':
+        case 'FINSA_ERROR':
           if (typeof self.config.onError === 'function') {
             self.config.onError(data.error);
           }
           break;
-        case 'LOANWIZARD_RESIZE':
+        case 'FINSA_RESIZE':
           if (data.height && self._iframe) {
             self._iframe.style.height = data.height + 'px';
           }
           break;
-        case 'LOANWIZARD_READY':
+        case 'FINSA_READY':
           if (typeof self.config.onReady === 'function') {
             self.config.onReady();
           }
@@ -98,7 +98,7 @@
     return this;
   };
 
-  LoanWizard.prototype.unmount = function () {
+  FinsaAI.prototype.unmount = function () {
     if (this._messageHandler) {
       window.removeEventListener('message', this._messageHandler);
       this._messageHandler = null;
@@ -109,21 +109,21 @@
     }
   };
 
-  LoanWizard.prototype.setLanguage = function (lang) {
+  FinsaAI.prototype.setLanguage = function (lang) {
     this.config.language = lang;
     if (this._iframe) {
       this._iframe.contentWindow.postMessage({ type: 'SET_LANGUAGE', lang: lang }, this.config.baseUrl);
     }
   };
 
-  LoanWizard.VERSION = '1.0.0';
+  FinsaAI.VERSION = '1.0.0';
 
   // UMD export
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = LoanWizard;
+    module.exports = FinsaAI;
   } else if (typeof define === 'function' && define.amd) {
-    define(function () { return LoanWizard; });
+    define(function () { return FinsaAI; });
   } else {
-    global.LoanWizard = LoanWizard;
+    global.FinsaAI = FinsaAI;
   }
 })(typeof window !== 'undefined' ? window : this);

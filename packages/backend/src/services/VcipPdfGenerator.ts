@@ -61,7 +61,7 @@ export const VcipPdfGenerator = {
 
       // ── Header ──────────────────────────────────────────────────────────
       doc.fontSize(20).font('Helvetica-Bold').text('V-CIP Compliance Record', { align: 'center' });
-      doc.fontSize(12).font('Helvetica').text('Poonawalla Fincorp — Finsa', { align: 'center' });
+      doc.fontSize(12).font('Helvetica').text('Finsa AI — Finsa', { align: 'center' });
       doc.moveDown(0.5);
       doc.fontSize(9).fillColor('#666').text(`Generated: ${new Date().toISOString()}`, { align: 'center' });
       doc.fillColor('black').moveDown(1.5);

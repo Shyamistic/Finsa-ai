@@ -18,7 +18,7 @@ const CreateSessionSchema = z.object({
     primaryColor: z.string().optional(),
     institutionName: z.string().optional(),
   }).optional(),
-  language: z.enum(['en', 'hi']).default('en'),
+  language: z.enum(['en', 'hi', 'mr', 'ta']).default('en'),
 });
 
 // POST /sessions — create session

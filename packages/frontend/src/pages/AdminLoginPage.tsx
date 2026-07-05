@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, Lock, Eye, EyeOff, Zap } from 'lucide-react';
 
-const ADMIN_KEY = import.meta.env.VITE_ADMIN_KEY || 'admin-key-loanwizard-2026-secure';
+const ADMIN_KEY = import.meta.env.VITE_ADMIN_KEY || 'admin-key-finsa-2026-secure';
 
 export default function AdminLoginPage() {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ export default function AdminLoginPage() {
     setError('');
     // Simulate a brief check
     await new Promise(r => setTimeout(r, 400));
-    if (key.trim() === ADMIN_KEY || key.trim() === 'admin-key-loanwizard-2026-secure') {
+    if (key.trim() === ADMIN_KEY || key.trim() === 'admin-key-finsa-2026-secure') {
       sessionStorage.setItem('admin_authenticated', 'true');
       sessionStorage.setItem('admin_key', key.trim());
       navigate('/admin');
@@ -46,7 +46,7 @@ export default function AdminLoginPage() {
               <Lock className="w-7 h-7 text-white" />
             </div>
             <h1 className="text-xl font-bold text-white">Admin Dashboard</h1>
-            <p className="text-sm text-gray-400 mt-1">Poonawalla Fincorp · Finsa</p>
+            <p className="text-sm text-gray-400 mt-1">Finsa AI · Finsa</p>
           </div>
 
           <div className="space-y-4">
@@ -91,7 +91,7 @@ export default function AdminLoginPage() {
 
           <div className="mt-6 pt-4 border-t border-gray-800">
             <p className="text-xs text-gray-600 text-center">
-              Demo key: <code className="text-gray-500">admin-key-loanwizard-2026-secure</code>
+              Demo key: <code className="text-gray-500">admin-key-finsa-2026-secure</code>
             </p>
           </div>
         </div>

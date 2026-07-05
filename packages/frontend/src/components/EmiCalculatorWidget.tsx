@@ -70,7 +70,7 @@ export default function EmiCalculatorWidget() {
         </div>
         <div>
           <h2 className="text-lg font-bold text-white">EMI Calculator</h2>
-          <p className="text-xs text-gray-400">Poonawalla Fincorp Personal Loan</p>
+          <p className="text-xs text-gray-400">Finsa AI Personal Loan</p>
         </div>
       </div>
 

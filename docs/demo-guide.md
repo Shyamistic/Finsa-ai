@@ -1,5 +1,5 @@
-# LoanWizard OS — Demo Guide
-## TenzorX 2026 | Poonawalla Fincorp
+# Finsa AI — Demo Guide
+## TenzorX 2026 | Finsa AI
 
 ---
 
@@ -8,7 +8,7 @@
 ```bash
 # 1. Clone and setup
 git clone <repo-url>
-cd loanwizard-os
+cd finsa-ai
 cp .env.example .env
 # Fill in ANTHROPIC_API_KEY and OPENAI_API_KEY in .env
 
@@ -117,12 +117,12 @@ Shows:
 
 ```html
 <div id="loan-widget"></div>
-<script src="http://localhost:3000/sdk/loanwizard-sdk.js"></script>
+<script src="http://localhost:3000/sdk/finsa-sdk.js"></script>
 <script>
-  const wizard = new LoanWizard({
+  const wizard = new FinsaAI({
     baseUrl: 'http://localhost:3000',
     apiKey: 'demo-key',
-    institutionName: 'Poonawalla Fincorp',
+    institutionName: 'Finsa AI',
     primaryColor: '#1a56db',
     language: 'en',
     onComplete: (result) => console.log('Offer:', result),
@@ -138,7 +138,7 @@ Shows:
 
 ### Why 7 Parallel Agents?
 Traditional video KYC is sequential: capture → verify → score → offer (48 hours).
-LoanWizard OS runs all 7 agents simultaneously from session start. The Orchestrator uses
+Finsa AI runs all 7 agents simultaneously from session start. The Orchestrator uses
 Redis pub/sub so each agent publishes results as soon as it's done — no waiting.
 
 ### Why Solana On-Chain Anchor?
@@ -146,7 +146,7 @@ The SHA-256 hash of the complete audit log is anchored to Solana Devnet via the 
 Attestation Service. This means:
 - Any third party can verify the session happened without accessing PII
 - The audit log cannot be tampered with retroactively
-- Poonawalla Fincorp gets an independently verifiable compliance proof
+- Finsa AI gets an independently verifiable compliance proof
 
 ### Why In-Browser Liveness?
 face-api.js runs in a Web Worker inside the browser. Raw video frames never leave the device.
@@ -160,4 +160,4 @@ session within 10 minutes using a resume token.
 
 ---
 
-*Problem Statement 3 | TenzorX 2026 National AI Hackathon | Poonawalla Fincorp*
+*Problem Statement 3 | TenzorX 2026 National AI Hackathon | Finsa AI*

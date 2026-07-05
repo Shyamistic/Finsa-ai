@@ -42,7 +42,7 @@ export default function AdminDashboard() {
     }
   }, [navigate]);
 
-  const adminKey = sessionStorage.getItem('admin_key') || 'admin-key-loanwizard-2026-secure';
+  const adminKey = sessionStorage.getItem('admin_key') || 'admin-key-finsa-2026-secure';
   const handleLogout = () => {
     sessionStorage.removeItem('admin_authenticated');
     sessionStorage.removeItem('admin_key');
@@ -118,7 +118,7 @@ export default function AdminDashboard() {
       <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold text-gray-900">{t('admin.title', 'en')}</h1>
-          <p className="text-sm text-gray-500">Poonawalla Fincorp — Finsa · Key: {adminKey.slice(0, 12)}...</p>
+          <p className="text-sm text-gray-500">Finsa AI — Finsa · Key: {adminKey.slice(0, 12)}...</p>
         </div>
         <button
           onClick={handleLogout}

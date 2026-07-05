@@ -43,7 +43,7 @@ export default function OfferPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const language: Language = (location.state as { language?: Language })?.language || 'en';
-  const apiKey: string = (location.state as { apiKey?: string })?.apiKey || 'demo-key-loanwizard-2026';
+  const apiKey: string = (location.state as { apiKey?: string })?.apiKey || 'demo-key-finsa-2026';
 
   const [session, setSession] = useState<SessionData | null>(null);
   const [selectedTenure, setSelectedTenure] = useState<number | null>(null);
@@ -134,7 +134,7 @@ export default function OfferPage() {
             <span className="text-xs font-bold text-white">PF</span>
           </div>
           <div>
-            <p className="text-sm font-semibold text-white">Poonawalla Fincorp</p>
+            <p className="text-sm font-semibold text-white">Finsa AI</p>
             <p className="text-xs text-white/40">Loans Made Simple</p>
           </div>
         </div>
@@ -155,7 +155,7 @@ export default function OfferPage() {
               {language === 'hi' ? 'Badhai ho! Aapka offer ready hai' : 'Congratulations! Your offer is ready'}
             </h1>
             <p className="text-white/40 text-sm mt-1">
-              {language === 'hi' ? 'Poonawalla Fincorp ki taraf se' : 'From Poonawalla Fincorp'}
+              {language === 'hi' ? 'Finsa AI ki taraf se' : 'From Finsa AI'}
             </p>
           </div>
         )}

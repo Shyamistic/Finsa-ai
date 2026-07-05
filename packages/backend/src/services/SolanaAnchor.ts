@@ -35,7 +35,7 @@ export const SolanaAnchor = {
     const payer = Keypair.fromSecretKey(Buffer.from(privateKeyBase64, 'base64'));
 
     const memo = JSON.stringify({
-      app: 'loanwizard-os',
+      app: 'finsa-ai',
       session: sessionId.slice(0, 8), // partial ID only — no full UUID on-chain
       hash: rootHash,
       ts: Date.now(),

@@ -23,8 +23,8 @@ export interface SpeechIntelOutput {
   agent_message?: string;
 }
 
-// Priya's full personality — Poonawalla Fincorp brand voice
-const SYSTEM_PROMPT = `You are Priya, a warm and professional AI Loan Advisor at Poonawalla Fincorp.
+// Priya's full personality — Finsa AI brand voice
+const SYSTEM_PROMPT = `You are Priya, a warm and professional AI Loan Advisor at Finsa AI.
 You are conducting a video-based loan application interview in India.
 
 PERSONALITY:
@@ -42,7 +42,7 @@ STRICT RULES:
 5. Be warm and human — not a script reader
 6. Your ONLY job: collect the 6 data points below
 
-POONAWALLA FINCORP CONTEXT (for your knowledge only — don't recite this):
+Finsa AI CONTEXT (for your knowledge only — don't recite this):
 - Personal Loan: ₹1L–₹50L, starting 9.99% p.a., 12–84 months
 - Professional Loan: up to ₹75L, starting 11% p.a.
 - MSME Loan: up to ₹75L, starting 15% p.a.
@@ -58,8 +58,8 @@ CONVERSATION FLOW (follow this order, one question at a time):
 NEVER give advice about documents, banks, or financial planning. Just collect the 6 data points.`;
 
 // Greeting varies by detected language — set after first user message
-const GREETING_EN = "Hi! I'm Priya from Poonawalla Fincorp. I'll help you get a personalised loan offer in just a few minutes. What are you looking to use the loan for?";
-const GREETING_HI = "Namaste! Main Priya hoon, Poonawalla Fincorp se. Aapko loan kis kaam ke liye chahiye? Main aapko kuch hi minutes mein ek personalised offer dilwa sakti hoon!";
+const GREETING_EN = "Hi! I'm Priya from Finsa AI. I'll help you get a personalised loan offer in just a few minutes. What are you looking to use the loan for?";
+const GREETING_HI = "Namaste! Main Priya hoon, Finsa AI se. Aapko loan kis kaam ke liye chahiye? Main aapko kuch hi minutes mein ek personalised offer dilwa sakti hoon!";
 
 export class SpeechIntelAgent implements IAgent {
   agentId = 'speech_intel';
@@ -162,7 +162,7 @@ export class SpeechIntelAgent implements IAgent {
           !!this.cumulativeEntities.employment_type &&
           !!this.cumulativeEntities.loan_purpose &&
           !!this.cumulativeEntities.pan &&
-          /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(String(this.cumulativeEntities.pan)));
+          /^[a-zA-Z]{4,5}[0-9]{4}[a-zA-Z]$/.test(String(this.cumulativeEntities.pan).replace(/[\s-]/g, '')));
 
       // On completion, send a warm wrap-up message
       if (interviewComplete && this.turnCount <= 5) {
