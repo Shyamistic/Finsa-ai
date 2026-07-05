@@ -7,6 +7,7 @@ import DemoPage from './pages/DemoPage';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLoginPage from './pages/AdminLoginPage';
 import RiskDashboard from './pages/RiskDashboard';
+import RoadmapPage from './pages/RoadmapPage';
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
       <Route path="/admin/login" element={<AdminLoginPage />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/risk" element={<RiskDashboard />} />
+      <Route path="/roadmap" element={<RoadmapPage />} />
     </Routes>
   );
 }
