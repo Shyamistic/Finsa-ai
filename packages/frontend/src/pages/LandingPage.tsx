@@ -119,6 +119,7 @@ export default function LandingPage() {
           </div>
           <div className="flex items-center gap-3">
             <button onClick={() => navigate('/demo')} className="text-xs text-slate-600 hover:text-slate-900 border border-slate-300 rounded-lg px-3 py-1.5 transition-colors hidden md:block">View Demo</button>
+            <button onClick={() => navigate('/roadmap')} className="text-xs text-slate-600 hover:text-slate-900 border border-slate-300 rounded-lg px-3 py-1.5 transition-colors hidden md:block">Roadmap</button>
             <button onClick={() => navigate('/admin')} className="text-xs text-slate-600 hover:text-slate-900 border border-slate-300 rounded-lg px-3 py-1.5 transition-colors hidden md:block">Admin</button>
             <button onClick={() => navigate('/apply')} className="text-xs bg-blue-700 text-white rounded-lg px-4 py-1.5 font-semibold hover:bg-blue-800 transition-colors">Start Journey</button>
           </div>
