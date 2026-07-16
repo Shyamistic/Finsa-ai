@@ -1,6 +1,6 @@
-# Finsa AI — Agentic AI Banking Platform
+# Finsa AI - SBI Hackathon Agentic Banking Platform
 
-> **Built for SBI Hackathon @ GFF 2026 · Kuber Labs | IIT Patna**
+> **Built for SBI Hackathon @ GFF 2026 · Finsa AI (Udyam/MSME startup)**
 
 Finsa AI is a multi-agent banking journey platform built for SBI hackathon evaluation. It demonstrates real-time customer acquisition, digital adoption, and digital engagement flows with a guided conversational interface, compliance-first architecture, and production-ready orchestration patterns.
 
@@ -17,10 +17,10 @@ Finsa AI is a multi-agent banking journey platform built for SBI hackathon evalu
 
 | URL | What |
 |-----|------|
-| `https://finsa-ai.onrender.com/demo` | Judges demo mode (recommended for evaluation) |
-| `https://finsa-ai.onrender.com/apply` | Start real-time session flow |
-| `https://finsa-ai.onrender.com` | Landing page |
-| `https://finsa-ai.onrender.com/admin` | Admin dashboard (key required) |
+| `https://finsa.finsa.ai/demo` | Judges demo mode (recommended for evaluation) |
+| `https://finsa.finsa.ai/apply` | Start real-time session flow |
+| `https://finsa.finsa.ai/` | Landing page |
+| `https://finsa.finsa.ai/admin` | Admin dashboard (key required) |
 
 ---
 
@@ -501,6 +501,13 @@ docker compose up --build
 - [ ] Set up WhatsApp Business API credentials
 - [ ] Enable Postgres SSL
 
+### Render Live Demo Deploy
+
+For a fast hackathon-grade deployment on Render (backend + frontend + Postgres + Redis), follow:
+
+- `docs/render-live-demo.md`
+- `render.yaml` (Render Blueprint for one-click provisioning)
+
 ### Troubleshooting Deployed Backend Errors
 
 If judges see backend failures in production, verify these first:
@@ -523,6 +530,7 @@ If judges see backend failures in production, verify these first:
 
 5. Health checks:
 - `GET /health`
+- `GET /health/dependencies`
 - `GET /metrics`
 
 ---
@@ -541,15 +549,7 @@ If judges see backend failures in production, verify these first:
 
 ## Team
 
-Built by **Kuber Labs | IIT Patna** for SBI Hackathon @ Global Fintech Fest 2026.
-
-| | |
-|---|---|
-| **Project** | Finsa AI — Agentic AI Banking Platform |
-| **Team** | Kuber Labs | IIT Patna |
-| **Event** | SBI Hackathon @ Global Fintech Fest 2026 |
-| **Live Demo** | https://finsa-ai.onrender.com |
-| **GitHub** | https://github.com/Shyamistic/Finsa-ai |
+Built by **Finsa AI** for SBI Hackathon @ GFF 2026 with a production-first startup roadmap.
 
 ---
 
@@ -559,4 +559,4 @@ MIT — see [LICENSE](LICENSE)
 
 ---
 
-*Finsa AI · Kuber Labs | IIT Patna · Powered by AWS Bedrock · RBI V-CIP Compliant · DPDP Act 2023*
+*Finsa AI · Powered by AWS Bedrock · RBI V-CIP Compliant · DPDP Act 2023*

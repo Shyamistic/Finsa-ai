@@ -21,7 +21,9 @@ const WS_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
 export function useSocket(sessionId: string | null) {
   const socketRef = useRef<Socket | null>(null);
+  const pendingTranscriptsRef = useRef<string[]>([]);
   const [connected, setConnected] = useState(false);
+  const [queuedTranscripts, setQueuedTranscripts] = useState(0);
   const [agentStates, setAgentStates] = useState<AgentStates>({});
   const [sessionPhase, setSessionPhase] = useState<string>('idle');
   const [agentMessage, setAgentMessage] = useState<{ text: string; id: number }>({ text: '', id: 0 });
@@ -29,12 +31,27 @@ export function useSocket(sessionId: string | null) {
   useEffect(() => {
     if (!sessionId) return;
 
-    const socket = io(WS_URL, { transports: ['websocket'] });
+    const socket = io(import.meta.env.VITE_WS_URL || WS_URL, {
+      transports: ['websocket', 'polling'],
+      reconnection: true,
+      reconnectionAttempts: 10,
+      reconnectionDelay: 500,
+      reconnectionDelayMax: 3000,
+      timeout: 10000,
+    });
     socketRef.current = socket;
 
     socket.on('connect', () => {
       setConnected(true);
       socket.emit('join_session', sessionId);
+
+      if (pendingTranscriptsRef.current.length > 0) {
+        pendingTranscriptsRef.current.forEach((transcript) => {
+          socket.emit('transcript', { session_id: sessionId, transcript });
+        });
+        pendingTranscriptsRef.current = [];
+        setQueuedTranscripts(0);
+      }
     });
 
     socket.on('disconnect', () => setConnected(false));
@@ -95,10 +112,33 @@ export function useSocket(sessionId: string | null) {
   }, []);
 
   const sendTranscript = useCallback((transcript: string) => {
-    socketRef.current?.emit('transcript', { session_id: sessionId, transcript });
+    const socket = socketRef.current;
+    if (!socket || !sessionId) return;
+
+    if (socket.connected) {
+      socket.emit('transcript', { session_id: sessionId, transcript });
+    } else {
+      pendingTranscriptsRef.current.push(transcript);
+      setQueuedTranscripts(pendingTranscriptsRef.current.length);
+    }
+
     // Also expose on window for SessionPage access
-    (window as unknown as Record<string, unknown>)._lwSocket = socketRef.current;
+    (window as unknown as Record<string, unknown>)._lwSocket = socket;
   }, [sessionId]);
 
-  return { connected, agentStates, sessionPhase, agentMessage, sendLivenessResult, sendTranscript, socket: socketRef.current };
+  const reconnect = useCallback(() => {
+    socketRef.current?.connect();
+  }, []);
+
+  return {
+    connected,
+    queuedTranscripts,
+    reconnect,
+    agentStates,
+    sessionPhase,
+    agentMessage,
+    sendLivenessResult,
+    sendTranscript,
+    socket: socketRef.current,
+  };
 }

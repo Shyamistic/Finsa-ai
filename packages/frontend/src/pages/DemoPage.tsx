@@ -11,6 +11,7 @@ import FraudScoreVisualizer from '../components/FraudScoreVisualizer';
 import LoanComparisonTable from '../components/LoanComparisonTable';
 import EmiCalculatorWidget from '../components/EmiCalculatorWidget';
 import VcipCompliancePanel from '../components/VcipCompliancePanel';
+import DeploymentReadinessPanel from '../components/DeploymentReadinessPanel';
 
 // YouTube demo video ID - replace with your actual video ID after uploading
 const YOUTUBE_VIDEO_ID = '6bLA20_10tw'; // placeholder - update after YouTube upload
@@ -344,6 +345,8 @@ export default function DemoPage() {
             7 AI agents run in parallel - liveness detection, speech intelligence, fraud scoring, bureau lookup, persona classification, offer generation, and audit tracing in one guided conversation.
           </p>
         </div>
+
+        <DeploymentReadinessPanel />
 
         {/* Controls */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">

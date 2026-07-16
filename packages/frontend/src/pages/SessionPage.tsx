@@ -29,7 +29,7 @@ export default function SessionPage() {
 
   const { tier, probing } = useBandwidthProbe();
   const { stream, startStream } = useWebRTC(tier);
-  const { connected, agentStates, agentMessage, sendLivenessResult, sendTranscript } = useSocket(sessionId || null);
+  const { connected, queuedTranscripts, reconnect, agentStates, agentMessage, sendLivenessResult, sendTranscript } = useSocket(sessionId || null);
 
   const [timeLeft, setTimeLeft] = useState(SESSION_DURATION);
   const [livenessComplete, setLivenessComplete] = useState(false);
@@ -46,6 +46,8 @@ export default function SessionPage() {
   const [panVerified, setPanVerified] = useState(false);
   const [aadhaarVerified, setAadhaarVerified] = useState(false);
   const [docUploading, setDocUploading] = useState(false);
+  const [panUploadError, setPanUploadError] = useState<string | null>(null);
+  const [aadhaarUploadError, setAadhaarUploadError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'chat' | 'docs' | 'form'>('chat');
   const chatEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognitionAny | null>(null);
@@ -298,16 +300,20 @@ export default function SessionPage() {
 
       if (docType === 'pan') setPanVerified(true);
       else setAadhaarVerified(true);
+      if (docType === 'pan') setPanUploadError(null);
+      else setAadhaarUploadError(null);
       // Notify Priya
       const msg = docType === 'pan'
         ? (language === 'hi' ? 'PAN card upload ho gaya' : 'PAN card uploaded successfully')
         : (language === 'hi' ? 'Aadhaar card upload ho gaya' : 'Aadhaar card uploaded successfully');
       setChatHistory(prev => [...prev, { role: 'user', text: `[Document: ${docType.toUpperCase()} uploaded]`, ts: Date.now() }]);
       sendTranscript(msg);
-    } catch {
-      // Verification failed — still mark as uploaded for demo
-      if (docType === 'pan') setPanVerified(true);
-      else setAadhaarVerified(true);
+    } catch (err) {
+      const message = axios.isAxiosError(err)
+        ? (err.response?.data?.error || err.message)
+        : 'Document verification failed. Please retry.';
+      if (docType === 'pan') setPanUploadError(message);
+      else setAadhaarUploadError(message);
     } finally {
       setDocUploading(false);
     }
@@ -373,6 +379,21 @@ export default function SessionPage() {
           </div>
         </div>
       </div>
+
+      {!connected && sessionStarted && (
+        <div className="flex items-center justify-between px-4 py-2 border-b border-amber-400/30 bg-amber-500/10 flex-shrink-0">
+          <div className="text-xs text-amber-200">
+            Network unstable. Reconnecting session...
+            {queuedTranscripts > 0 && <span className="ml-1">({queuedTranscripts} queued)</span>}
+          </div>
+          <button
+            onClick={reconnect}
+            className="px-3 py-1 rounded-lg text-xs border border-amber-300/40 text-amber-100 hover:bg-amber-500/20 transition-colors"
+          >
+            Retry now
+          </button>
+        </div>
+      )}
 
       {/* Main layout: video left, chat+agents right */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-5 gap-0 overflow-hidden min-h-0">
@@ -634,7 +655,13 @@ export default function SessionPage() {
                       type="file"
                       accept="image/*,.pdf"
                       className="hidden"
-                      onChange={e => { const f = e.target.files?.[0]; if (f) setPanFile(f); }}
+                      onChange={e => {
+                        const f = e.target.files?.[0];
+                        if (f) {
+                          setPanFile(f);
+                          setPanUploadError(null);
+                        }
+                      }}
                     />
                     <button
                       onClick={() => panInputRef.current?.click()}
@@ -657,6 +684,21 @@ export default function SessionPage() {
                         className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-xl text-xs text-blue-400 hover:bg-blue-500/30 transition-colors disabled:opacity-50"
                       >
                         {docUploading ? '...' : 'Verify'}
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {panUploadError && !panVerified && (
+                  <div className="mt-3 flex items-center justify-between gap-2 rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2">
+                    <p className="text-[11px] text-red-200">{panUploadError}</p>
+                    {panFile && (
+                      <button
+                        onClick={() => handleDocUpload(panFile, 'pan')}
+                        disabled={docUploading}
+                        className="text-[11px] px-2 py-1 rounded-md border border-red-300/40 text-red-100 hover:bg-red-500/20 disabled:opacity-50"
+                      >
+                        Retry
                       </button>
                     )}
                   </div>
@@ -703,7 +745,13 @@ export default function SessionPage() {
                       type="file"
                       accept="image/*,.pdf"
                       className="hidden"
-                      onChange={e => { const f = e.target.files?.[0]; if (f) setAadhaarFile(f); }}
+                      onChange={e => {
+                        const f = e.target.files?.[0];
+                        if (f) {
+                          setAadhaarFile(f);
+                          setAadhaarUploadError(null);
+                        }
+                      }}
                     />
                     <button
                       onClick={() => aadhaarInputRef.current?.click()}
@@ -725,6 +773,21 @@ export default function SessionPage() {
                         className="px-4 py-2 bg-violet-500/20 border border-violet-500/30 rounded-xl text-xs text-violet-400 hover:bg-violet-500/30 transition-colors disabled:opacity-50"
                       >
                         {docUploading ? '...' : 'Verify'}
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {aadhaarUploadError && !aadhaarVerified && (
+                  <div className="mt-3 flex items-center justify-between gap-2 rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2">
+                    <p className="text-[11px] text-red-200">{aadhaarUploadError}</p>
+                    {aadhaarFile && (
+                      <button
+                        onClick={() => handleDocUpload(aadhaarFile, 'aadhaar')}
+                        disabled={docUploading}
+                        className="text-[11px] px-2 py-1 rounded-md border border-red-300/40 text-red-100 hover:bg-red-500/20 disabled:opacity-50"
+                      >
+                        Retry
                       </button>
                     )}
                   </div>
