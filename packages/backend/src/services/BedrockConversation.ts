@@ -102,6 +102,7 @@ Fields to extract (all optional, use null if not mentioned):
 - income: number (monthly income in INR, only if customer explicitly stated it)
 - employment_type: string (one of: Salaried, Self-Employed, MSME-Owner, only if stated)
 - loan_purpose: string (brief description, only if stated)
+- loan_amount_requested: number (requested loan amount in INR, convert words like lakh/crore to numeric INR)
 - existing_emis: number (monthly EMI amount in INR, only if stated)
 - preferred_tenure_months: number (only if stated)
 - pan: string (exactly 10 characters, format: 5 uppercase letters + 4 digits + 1 uppercase letter, ONLY if customer explicitly said their PAN number — do NOT infer or guess)

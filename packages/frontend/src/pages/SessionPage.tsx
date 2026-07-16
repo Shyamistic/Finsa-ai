@@ -92,6 +92,26 @@ export default function SessionPage() {
     }
   }, [agentStates, sessionId, navigate, language, apiKey]);
 
+  // Fallback polling: if socket status event is missed, navigate when backend session already has an offer.
+  useEffect(() => {
+    if (!sessionId || !sessionStarted) return;
+    const poll = setInterval(async () => {
+      try {
+        const { data } = await axios.get<{ offer?: unknown; status?: string }>(`${API_URL}/sessions/${sessionId}`, {
+          headers: { Authorization: `Bearer ${apiKey}` },
+        });
+        if (data.offer || data.status === 'offer_delivered') {
+          clearInterval(poll);
+          navigate(`/offer/${sessionId}`, { state: { language, apiKey } });
+        }
+      } catch {
+        // Ignore transient failures; socket-driven flow remains primary.
+      }
+    }, 2500);
+
+    return () => clearInterval(poll);
+  }, [sessionId, sessionStarted, apiKey, navigate, language]);
+
   // Show agent messages in chat + speak them
   useEffect(() => {
     if (!agentMessage.text) return;

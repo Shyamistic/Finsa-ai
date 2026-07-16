@@ -36,6 +36,8 @@ interface SessionData {
   fraud_score: number | null;
   solana_tx_signature: string | null;
   language: string;
+  handoff_status?: string | null;
+  handoff_ticket_id?: string | null;
 }
 
 export default function OfferPage() {
@@ -58,6 +60,8 @@ export default function OfferPage() {
   const [nachSetup, setNachSetup] = useState(false);
   const [customAmount, setCustomAmount] = useState<number | null>(null);
   const [showCalculator, setShowCalculator] = useState(false);
+  const [handoffLoading, setHandoffLoading] = useState(false);
+  const [handoffTicketId, setHandoffTicketId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!sessionId) return;
@@ -124,6 +128,27 @@ export default function OfferPage() {
   }
 
   const explanation = language === 'hi' ? offer.explanation_hi : offer.explanation_en;
+
+  const assignToSbiReviewer = async () => {
+    if (!sessionId || handoffLoading) return;
+    setHandoffLoading(true);
+    try {
+      const { data } = await axios.post<{ assigned: boolean; ticket_id: string }>(
+        `${API_URL}/sessions/${sessionId}/handoff`,
+        {
+          notes: 'Auto-assigned from digital loan journey after customer accepted offer.',
+        },
+        {
+          headers: { Authorization: `Bearer ${apiKey}` },
+        }
+      );
+      if (data.assigned) {
+        setHandoffTicketId(data.ticket_id);
+      }
+    } finally {
+      setHandoffLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#0f0f13] text-white">
@@ -302,6 +327,25 @@ export default function OfferPage() {
             <div className="flex items-center gap-2 text-xs text-white/40">
               <Phone className="w-3 h-3" />
               <span>Support: 1800-266-3201 (Toll Free)</span>
+            </div>
+
+            <div className="mt-4 bg-white/5 border border-white/10 rounded-xl p-3">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs text-white/60 uppercase tracking-wide">SBI Human Review</p>
+                  <p className="text-sm text-white/80 mt-1">Assign this case to HITL desk for document verification and assisted closure.</p>
+                </div>
+                <button
+                  onClick={assignToSbiReviewer}
+                  disabled={handoffLoading || !!handoffTicketId}
+                  className="px-3 py-2 rounded-lg text-xs border border-blue-400/40 text-blue-200 hover:bg-blue-500/20 disabled:opacity-50"
+                >
+                  {handoffTicketId ? 'Assigned' : handoffLoading ? 'Assigning...' : 'Assign to SBI'}
+                </button>
+              </div>
+              {handoffTicketId && (
+                <p className="mt-2 text-xs text-green-300">HITL ticket created: {handoffTicketId}</p>
+              )}
             </div>
           </div>
         )}

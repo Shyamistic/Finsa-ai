@@ -17,6 +17,10 @@ CREATE TABLE IF NOT EXISTS sessions (
   vcip_pdf_url TEXT,
   resume_token UUID NOT NULL DEFAULT gen_random_uuid(),
   white_label_config JSONB,
+  handoff_status VARCHAR(24) NOT NULL DEFAULT 'not_assigned',
+  handoff_ticket_id VARCHAR(64),
+  handoff_notes TEXT,
+  handoff_assigned_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   completed_at TIMESTAMPTZ
 );

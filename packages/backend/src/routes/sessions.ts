@@ -167,6 +167,41 @@ sessionsRouter.post('/:id/transcript', requireApiKey('api'), async (req: Request
   }
 });
 
+// POST /sessions/:id/handoff — assign case to SBI human reviewer (HITL)
+sessionsRouter.post('/:id/handoff', requireApiKey('api'), async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { notes } = req.body as { notes?: string };
+    const ticketId = `SBI-HITL-${Date.now().toString().slice(-8)}`;
+
+    const updated = await queryOne<{ id: string }>(
+      `UPDATE sessions
+       SET handoff_status = 'assigned',
+           handoff_ticket_id = $2,
+           handoff_notes = $3,
+           handoff_assigned_at = NOW()
+       WHERE id = $1
+       RETURNING id`,
+      [req.params.id, ticketId, notes ?? null]
+    );
+
+    if (!updated) {
+      res.status(404).json({ error: 'Session not found' });
+      return;
+    }
+
+    const { AuditLog } = await import('../services/AuditLog');
+    await AuditLog.append(req.params.id, 'hitl_assigned', {
+      ticket_id: ticketId,
+      notes: notes ?? null,
+    });
+
+    res.json({ assigned: true, ticket_id: ticketId });
+  } catch (err) {
+    logger.error({ event: 'session_handoff_error', err });
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // POST /sessions/:id/resume — resume dropped session
 sessionsRouter.post('/:id/resume', async (req: Request, res: Response): Promise<void> => {
   try {

@@ -7,6 +7,7 @@ import { BureauRiskOutput } from './BureauRiskAgent';
 import { PersonaOutput, Persona } from './PersonaClassifierAgent';
 import { FraudDetectionOutput } from './FraudDetectionAgent';
 import { query } from '../db/db';
+import { SpeechIntelOutput } from './SpeechIntelAgent';
 
 export interface TenureOption {
   months: number;
@@ -83,6 +84,7 @@ export class OfferEngineAgent implements IAgent {
   private bureauData: BureauRiskOutput | null = null;
   private personaData: PersonaOutput | null = null;
   private fraudData: FraudDetectionOutput | null = null;
+  private speechData: SpeechIntelOutput | null = null;
 
   constructor(private bus: EventBus) {}
 
@@ -114,6 +116,10 @@ export class OfferEngineAgent implements IAgent {
       this.fraudData = data as FraudDetectionOutput;
       this.tryGenerate();
     });
+
+    this.bus.subscribe(`session:${this.sessionId}:speech_intel`, (data) => {
+      this.speechData = data as SpeechIntelOutput;
+    });
   }
 
   private tryGenerate(): void {
@@ -143,10 +149,23 @@ export class OfferEngineAgent implements IAgent {
     const availableEmi = income * 0.5 - existingEmis; // 50% FOIR
     const maxAffordableAmount = availableEmi * 36 / (1 + 0.15); // rough 15% rate estimate
 
-    const amount = Math.max(
+    let amount = Math.max(
       rule.min_amount,
       Math.min(rule.max_amount, Math.round(maxAffordableAmount / 10000) * 10000)
     );
+
+    // Respect customer ask when provided, but keep it inside policy and affordability bounds.
+    const requestedAmountRaw = this.speechData?.entities?.loan_amount_requested;
+    const requestedAmount = typeof requestedAmountRaw === 'number' && requestedAmountRaw > 0
+      ? Math.round(requestedAmountRaw / 10000) * 10000
+      : null;
+    if (requestedAmount) {
+      const boundedRequestedAmount = Math.max(rule.min_amount, Math.min(rule.max_amount, requestedAmount));
+      // Sanity clamp: don't exceed 120% of affordability to avoid unrealistic jumps.
+      const affordabilityCap = Math.max(rule.min_amount, Math.round((maxAffordableAmount * 1.2) / 10000) * 10000);
+      amount = Math.min(boundedRequestedAmount, affordabilityCap);
+      amount = Math.max(rule.min_amount, amount);
+    }
 
     // Rate: interpolate based on credit score
     const creditScore = bureau.credit_score ?? 600;

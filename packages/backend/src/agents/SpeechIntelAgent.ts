@@ -8,6 +8,7 @@ export interface ExtractedEntities {
   income?: number;
   employment_type?: string;
   loan_purpose?: string;
+  loan_amount_requested?: number;
   existing_emis?: number;
   preferred_tenure_months?: number;
   pan?: string;
