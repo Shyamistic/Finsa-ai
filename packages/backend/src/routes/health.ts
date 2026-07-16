@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { calculateEMI, generateAmortizationSchedule, calculateMaxEligibility } from '../services/EmiCalculator';
 import Redis from 'ioredis';
 import { pool } from '../db/db';
+import { checkPollyAvailable } from '../services/PollyTTS';
 
 export const healthRouter = Router();
 
@@ -16,6 +17,7 @@ healthRouter.get('/', (_req, res) => {
 });
 
 healthRouter.get('/dependencies', async (_req, res) => {
+  const deepProbe = _req.query.deep === '1';
   const result = {
     status: 'ok' as 'ok' | 'degraded',
     db: { ok: false, detail: '' },
@@ -25,6 +27,7 @@ healthRouter.get('/dependencies', async (_req, res) => {
       region: process.env.AWS_REGION || 'us-east-1',
       using_profile: Boolean(process.env.AWS_PROFILE),
       using_static_keys: Boolean(process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY),
+      polly_ok: null as boolean | null,
     },
     uptime_s: Math.floor((Date.now() - startTime) / 1000),
   };
@@ -55,6 +58,18 @@ healthRouter.get('/dependencies', async (_req, res) => {
   result.aws.ok = result.aws.using_profile || result.aws.using_static_keys;
   if (!result.aws.ok) {
     result.status = 'degraded';
+  }
+
+  if (deepProbe) {
+    try {
+      result.aws.polly_ok = await checkPollyAvailable();
+      if (!result.aws.polly_ok) {
+        result.status = 'degraded';
+      }
+    } catch {
+      result.aws.polly_ok = false;
+      result.status = 'degraded';
+    }
   }
 
   res.status(result.status === 'ok' ? 200 : 503).json(result);

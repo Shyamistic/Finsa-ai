@@ -39,7 +39,12 @@ ttsRouter.post('/synthesize', ttsLimiter, async (req: Request, res: Response): P
 
   } catch (err) {
     logger.error({ event: 'tts_route_error', err });
+    const e = err as { name?: string; message?: string };
     // Return 503 so frontend can fall back to browser TTS
-    res.status(503).json({ error: 'TTS service unavailable' });
+    res.status(503).json({
+      error: 'TTS service unavailable',
+      code: e?.name || 'UnknownError',
+      reason: e?.message || 'Unknown Polly failure',
+    });
   }
 });

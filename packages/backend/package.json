@@ -7,6 +7,8 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
+    "smoke:aws": "node scripts/aws-check.cjs",
+    "smoke:flow": "node scripts/smoke-local-flow.cjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
